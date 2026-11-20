@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El aula como taller</title>
+<script src="./support.js?v=20261120"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&amp;f[]=general-sans@400,500,600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;1,400;1,500&amp;display=swap">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#060B14;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:#8FB8FF;text-decoration:none}
+::selection{background:#7C4DFF;color:#F5F7FA}
+button{font-family:inherit}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px);box-sizing:border-box}
+.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8FB8FF}
+.eyebrow b{font-weight:600;color:#C9B5FF}
+.h2{margin:0;font-family:'Cabinet Grotesk',system-ui,sans-serif;font-weight:800;font-size:clamp(40px,6vw,92px);line-height:.92;letter-spacing:-.04em;text-wrap:balance}
+.grad{background:linear-gradient(90deg,#5C8CFF,#A77BFF 45%,#3FBF8F 90%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradShift 7s ease-in-out infinite alternate}
+.lead{margin:0;color:#9FB0C8;font-size:clamp(16px,1.35vw,19px);line-height:1.65;max-width:640px;text-wrap:pretty}
+.card{background:#0D1B33;border:1px solid rgba(143,184,255,.14);border-radius:28px;padding:clamp(22px,3vw,36px);box-sizing:border-box}
+.chip{display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;font-size:14px;background:rgba(143,184,255,.08);border:1px solid rgba(143,184,255,.16);color:#DCE6F7}
+.serif{font-family:'EB Garamond',Georgia,serif}
+
+@keyframes gradShift{from{background-position:0% 0}to{background-position:100% 0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4%,-3%) scale(1.1)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5%,4%) scale(1.08)}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@keyframes nudgeX{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes lockstep{0%,100%{opacity:.35;transform:scale(.86)}50%{opacity:.75;transform:scale(1)}}
+@keyframes face{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.06)}}
+@keyframes ripple{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.6);opacity:0}}
+@keyframes hourglass{0%,40%{transform:rotate(0)}50%,90%{transform:rotate(180deg)}100%{transform:rotate(180deg)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-22px)}}
+@keyframes spark{0%{opacity:1;transform:rotate(var(--a)) translateY(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateY(-46px) scale(.4)}}
+@keyframes hammer{0%,55%,100%{transform:rotate(-28deg)}65%{transform:rotate(8deg)}}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes assemble{from{left:var(--x0);top:var(--y0);transform:translate(-50%,-50%) rotate(var(--r)) scale(.9);opacity:0}25%{opacity:1}to{left:var(--x1);top:var(--y1);transform:translate(-50%,-50%) rotate(0) scale(1);opacity:1}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes spray{from{opacity:0;transform:rotate(var(--r)) scale(1.5);filter:blur(8px)}to{opacity:1;transform:rotate(var(--r)) scale(1);filter:blur(0)}}
+@keyframes scanDown{0%{top:12%}100%{top:84%}}
+@keyframes popAct{0%,8%{opacity:0;transform:translateY(12px) scale(.92)}14%,30%{opacity:1;transform:none}36%,100%{opacity:0;transform:translateY(-8px) scale(.96)}}
+@keyframes pop{0%{opacity:0;transform:scale(0)}100%{opacity:1;transform:scale(1)}}
+@keyframes travel{0%{offset-distance:0%}100%{offset-distance:100%}}
+@keyframes nodeOn{from{background:#0D1B33;box-shadow:none}to{background:var(--c);box-shadow:0 0 18px var(--c)}}
+@keyframes lineFill{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+/* revelar al hacer scroll */
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+[data-reveal].in{opacity:1;transform:none}
+
+/* Citas de la tesis */
+.q{position:relative;isolation:isolate;overflow:hidden;margin:0;padding:clamp(26px,4vw,48px);border-radius:28px;border:1px solid transparent;background:linear-gradient(#0B1830,#0B1830) padding-box,linear-gradient(120deg,rgba(92,140,255,.8),rgba(167,123,255,.8),rgba(63,191,143,.8)) border-box;display:flex;flex-direction:column;gap:18px}
+.q::before{content:"";position:absolute;inset:-60%;z-index:-1;background:conic-gradient(from 0deg,transparent 0 60%,rgba(167,123,255,.16) 75%,rgba(92,140,255,.14) 85%,transparent 100%);animation:spin 16s linear infinite}
+.q-mark{display:block;height:44px;font-family:'EB Garamond',Georgia,serif;font-size:110px;line-height:.85;background:linear-gradient(135deg,#5C8CFF,#A77BFF,#3FBF8F);-webkit-background-clip:text;background-clip:text;color:transparent}
+.q-text{margin:0;font-family:'EB Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(24px,2.7vw,40px);line-height:1.25;text-wrap:balance;background:linear-gradient(90deg,#F5F7FA 0 50%,rgba(245,247,250,.16) 50% 100%);background-size:200% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;color:transparent;transition:background-position 2.4s cubic-bezier(.4,0,.2,1) .3s}
+.in .q-text,.q.in .q-text{background-position:0 0}
+.q-sm .q-text{font-size:clamp(20px,1.9vw,27px)}
+.q-cite{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13px;color:#9FB0C8}
+.q-pill{padding:5px 12px;border-radius:999px;background:rgba(167,123,255,.14);border:1px solid rgba(167,123,255,.35);color:#D9CCFF;font-weight:600;letter-spacing:.04em}
+
+/* Héroe: órbita de los gestos */
+.orbit{position:relative;width:min(400px,84vw);aspect-ratio:1;--R:calc(min(400px,84vw) / 2 - 22px)}
+.orbit .ring{position:absolute;inset:22px;border-radius:50%;border:1px dashed rgba(143,184,255,.35);animation:spin 36s linear infinite}
+.orbit .ring2{position:absolute;inset:22%;border-radius:50%;border:1px solid rgba(167,123,255,.25);animation:spin 22s linear infinite reverse}
+.orbit .g{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--a)) translateY(calc(-1 * var(--R))) rotate(calc(-1 * var(--a)))}
+.orbit .gi{animation:spin 36s linear infinite reverse}
+.orbit .gl{display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;padding:8px 14px;border-radius:999px;background:rgba(6,11,20,.8);border:1px solid var(--c);color:#F5F7FA;font-size:13px;font-weight:600;box-shadow:0 0 22px var(--cg)}
+.orbit .core{position:absolute;inset:31%;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 35% 30%,#2F6BFF,#4B2A9E 55%,#0B3B2E 100%);box-shadow:0 0 60px rgba(124,77,255,.45),inset 0 0 30px rgba(6,11,20,.5);animation:breathe 5s ease-in-out infinite}
+.orbit .core span{font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,2.2vw,24px);line-height:1.1;color:#F5F7FA;padding:0 12px}
+.orbit .dot{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c);transform:rotate(var(--a)) translateY(calc(-1 * var(--R) * .56))}
+
+/* Máquina y rostros */
+.gear{position:absolute;border-radius:50%;background:radial-gradient(circle,#0D1B33 0 17%,#2B3B5E 18% 60%,transparent 61%),repeating-conic-gradient(#2B3B5E 0 11deg,transparent 11deg 22deg);-webkit-mask:radial-gradient(circle,#000 0 72%,transparent 73%);mask:radial-gradient(circle,#000 0 72%,transparent 73%)}
+.cells{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+
+/* Fases */
+.mnode{position:absolute;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;border:2px solid var(--c);color:#F5F7FA;font-weight:700;font-size:15px;cursor:pointer;transition:background .5s,box-shadow .5s,transform .5s}
+
+/* Escenas de clase */
+.scene{position:relative;overflow:hidden;border-radius:24px;min-height:360px;height:100%;box-sizing:border-box}
+.c1chip{position:absolute;padding:10px 16px;border-radius:14px;font-weight:700;font-size:clamp(13px,1.3vw,16px);color:#F5F7FA;white-space:nowrap;animation:assemble 1.4s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d)}
+.wallw{position:absolute;font-family:'Cabinet Grotesk',system-ui,sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.01em;white-space:nowrap;animation:spray .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d)}
+.tl{position:relative;display:flex;flex-direction:column;gap:22px;padding-left:34px}
+.tl::before{content:"";position:absolute;left:10px;top:8px;bottom:8px;width:2px;background:linear-gradient(#5C8CFF,#A77BFF,#3FBF8F);transform-origin:top;animation:lineFill 1.6s cubic-bezier(.4,0,.2,1) both}
+.tl-n{position:absolute;left:-34px;top:2px;width:22px;height:22px;border-radius:50%;border:2px solid var(--c);background:#0D1B33;animation:nodeOn .5s ease both;animation-delay:var(--d)}
+.tl-i{position:relative;opacity:0;animation:fadeUp .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d)}
+
+/* Gestos: 4 columnas en computador, 2×2 en tableta, 1 en celular; toda la tarjeta abre su ventana */
+.gestos-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+@media (max-width:1180px){.gestos-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.gestos-grid{grid-template-columns:1fr}}
+.gesto-card{cursor:pointer;transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s, border-color .35s}
+.gesto-card:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(124,77,255,.22)}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}[data-reveal]{opacity:1;transform:none}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height:100vh;background:#060B14;color:#F5F7FA;font-family:'General Sans', system-ui, sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden">
+
+<nav style="position:fixed;top:16px;left:0;right:0;z-index:30;display:flex;justify-content:center;padding:0 16px;pointer-events:none">
+  <div style="pointer-events:auto;display:flex;align-items:center;gap:8px;padding:8px;border-radius:999px;background:rgba(13,27,51,.6);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(143,184,255,.14)">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;background:#F5F7FA;color:#060B14;font-weight:600;font-size:14px;white-space:nowrap" style-hover="color:#060B14;opacity:.88"><span aria-hidden="true">←</span> Volver a la hoja de vida</a>
+  </div>
+</nav>
+
+<!-- HÉROE -->
+<header id="inicio" style="position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center">
+  <div aria-hidden="true" style="position:absolute;inset:-10%;pointer-events:none;background:radial-gradient(32% 36% at 20% 30%, rgba(47,107,255,.38), transparent 70%);filter:blur(30px);animation:drift 16s ease-in-out infinite"></div>
+  <div aria-hidden="true" style="position:absolute;inset:-10%;pointer-events:none;background:radial-gradient(30% 34% at 75% 35%, rgba(124,77,255,.34), transparent 70%);filter:blur(30px);animation:drift2 19s ease-in-out infinite"></div>
+  <div aria-hidden="true" style="position:absolute;inset:-10%;pointer-events:none;background:radial-gradient(28% 30% at 55% 85%, rgba(63,191,143,.24), transparent 70%);filter:blur(30px);animation:drift 22s ease-in-out infinite"></div>
+  <div class="wrap" style="position:relative;z-index:1;width:100%;padding-top:clamp(110px,16vh,150px);padding-bottom:clamp(48px,8vw,96px);display:flex;flex-wrap:wrap;align-items:center;gap:48px 64px">
+    <div style="flex: 1.2 1 440px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+      <span class="eyebrow" style="animation:fadeUp .9s .05s both">Cómo enseño · <b>Acción creativa artesanal</b></span>
+      <h1 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(56px,9vw,140px);line-height:.86;letter-spacing:-0.045em">
+        <span style="display:block;animation:fadeUp 1s .2s both">El aula</span>
+        <span class="grad" style="display:block;animation:fadeUp 1s .35s both, gradShift 7s ease-in-out infinite alternate">como taller.</span>
+      </h1>
+      <p class="lead" style="animation:fadeUp 1s .55s both">Enseño como un <b style="color: rgb(245, 247, 250); font-weight: 600">artesano creador&nbsp;</b>: no opero recetas prefabricadas, co-creo con mis estudiantes. Los aprendizajes verdaderos nacen en la conversación, el juego, las dinámicas de aula y la comprensión de la diferencia.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;animation:fadeUp 1s .75s both"><span class="chip">Fundamentado en mi tesis de maestría en Filosofía, Universidad de La Salle</span>
+      </div>
+      <div style="animation:fadeUp 1s .95s both"><a href="#maquina" style="display:inline-flex;align-items:center;gap:12px;padding:6px 6px 6px 24px;border-radius:999px;background:#F5F7FA;color:#0D1B33;font-weight:600;font-size:15px" style-hover="color:#0D1B33;box-shadow:0 0 0 6px rgba(167,123,255,.2)">Recorrer el método <span aria-hidden="true" style="width:38px;height:38px;border-radius:999px;background:#0D1B33;color:#F5F7FA;display:grid;place-items:center"><span style="display:block;animation:nudge 1.6s ease-in-out infinite">↓</span></span></a></div>
+    </div>
+    <div aria-hidden="true" style="flex: 1 1 340px; display: flex; justify-content: center; animation: fadeUp 1.2s .4s both">
+      <div class="orbit">
+        <div class="ring"></div>
+        <div class="ring2"></div>
+        <div class="core"><span data-om-label="El Docente Como un Artesano Creador">El docente como un artesano creador<br></span></div>
+        <div class="ring" style="border:none">
+          <sc-for list="{{ orbitSlots }}" as="o" hint-placeholder-count="8">
+            <div class="g" style="--a:{{ o.a }}"><div class="gi"><span class="gl" style="--c:{{ o.c }};--cg:{{ o.g }};opacity:{{ o.op }};scale:{{ o.sc }};filter:{{ o.f }};transition:opacity .9s ease, scale .9s cubic-bezier(.2,.8,.2,1), filter .9s ease">{{ o.w }}</span></div></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main style="display:flex;flex-direction:column;gap:clamp(110px,13vw,190px);padding-bottom:60px">
+
+  <!-- 01 LA MÁQUINA → LOS ROSTROS -->
+  <section id="maquina" class="wrap" style="scroll-margin-top:100px;display:flex;flex-direction:column;gap:44px">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+      <span class="eyebrow" style="font-size: 18px"><b>01</b> / El problema</span>
+      <h2 class="h2">De la máquina<br><span class="grad">a los rostros.</span></h2>
+      <p class="lead">La Formación Basada en Competencias estandariza y mide: convierte la escuela en una «máquina de educación» y al docente en operario de técnicas diseñadas por otros. Lo artesanal se evoca porque se contrapone a lo industrial, repetitivo y uniforme.</p>
+    </div>
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:16px;align-items:stretch">
+      <div class="card" style="flex:1 1 380px;display:flex;flex-direction:column;gap:20px;background:linear-gradient(180deg,#0A1222,#0D1B33)">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding-top: 22px; padding-right: 22px; padding-bottom: 22px; padding-left: 22px; opacity: 0.75"><span class="eyebrow" style="color: #7F8FAA; font-size: 15px; text-align: center">La máquina de educación</span><span style="font-size: 16px; color: #7F8FAA">Estándar · medición</span></div>
+        <div aria-hidden="true" style="position: relative; height: 110px; top: -16px">
+          <span class="gear" style="left:8%;top:0;width:110px;height:110px;animation:spin 6s linear infinite"></span>
+          <span class="gear" style="left:calc(8% + 92px);top:34px;width:76px;height:76px;animation:spin 4.15s linear infinite reverse"></span>
+          <span class="gear" style="right:10%;top:10px;width:90px;height:90px;animation:spin 5s linear infinite"></span>
+        </div>
+        <div class="cells" aria-hidden="true" style="position: relative; top: -6px">
+          <sc-for list="{{ cells }}" as="c" hint-placeholder-count="24">
+            <span style="aspect-ratio:1;border-radius:6px;background:#2B3B5E;animation:lockstep 1.6s ease-in-out infinite"></span>
+          </sc-for>
+        </div>
+        <p style="margin: 0; color: #7F8FAA; font-size: 23px; text-align: center">Filas idénticas, un mismo ritmo para todos. El docente opera; no crea. Se niega la alteridad y, por ende, se reproduce el exceso de lo igual.</p>
+      </div>
+      <div aria-hidden="true" style="flex: 0 0 auto; display: grid; place-items: center; padding: 0 4px; grid-template-columns: repeat(1, minmax(0, 1fr)); flex-grow: 0; gap: 232px; width: 32px"><span style="font-size:32px;background:linear-gradient(90deg,#5C8CFF,#A77BFF);-webkit-background-clip:text;background-clip:text;color:transparent;animation:nudgeX 1.8s ease-in-out infinite">→</span></div>
+      <div class="card" style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 20px; background: radial-gradient(80% 70% at 70% 0%,rgba(124,77,255,.22),transparent 70%),radial-gradient(60% 60% at 0% 100%,rgba(63,191,143,.16),transparent 70%),#0D1B33; height: 836px">
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 31px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; flex-grow: 3"><span class="eyebrow" style="color:#C9B5FF">El aula de carne y hueso</span><span style="font-size:12px;color:#9FB0C8">Los Otros · encuentro</span></div>
+        <p class="serif" style="margin: 0; height: 150px; display: flex; align-items: center; font-style: italic; font-size: clamp(22px,2vw,26px); line-height: 1.25; color: #DCE6F7; text-align: justify; position: relative; left: 0px; top: -9px">Docentes y estudiantes son Otros entre sí: el rostro del otro interpela y obliga a responder. Y dicha respuesta debe ser igual de única, es decir, artesanal, a la medida de la circunstancia y de la otredad.</p>
+        
+        <div class="cells" aria-hidden="true" style="position: relative; top: -7px">
+          <sc-for list="{{ faces }}" as="f" hint-placeholder-count="24">
+            <span style="display:grid;place-items:center;aspect-ratio:1"><span style="width:{{ f.size }};aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 36% 42%,#060B14 0 7%,transparent 8%),radial-gradient(circle at 64% 42%,#060B14 0 7%,transparent 8%),radial-gradient(ellipse 22% 9% at 50% 66%,rgba(6,11,20,.55) 0 60%,transparent 62%),{{ f.c }};box-shadow:0 0 14px {{ f.g }};animation:face {{ f.dur }} ease-in-out {{ f.delay }} infinite"></span></span>
+          </sc-for>
+        </div><p style="margin: 0; color: #9FB0C8; font-size: 15px; text-align: center; position: relative; top: -16px">Cada rostro distinto, con su propio ritmo. <br>Inspirado en: Lévinas, Dussel, Mèlich.</p><p class="serif" style="margin: 0; height: 194px; display: flex; align-items: center; font-style: italic; font-size: clamp(22px,2vw,26px); line-height: 1.25; color: #DCE6F7; text-align: justify; position: relative; left: 8px; top: -18px; width: 412px">Lo importante y vital dentro del aula es co-crear con el estudiante, mediado por el docente, quien decide en colectivo qué se va a recordar, los porqués de su recuerdo y la necesidad de comunicarlo al resto de la sociedad. Más que memorizar, es construir un saber práctico, vital y pertinente.</p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px">
+      <figure class="q q-sm" data-reveal="">
+        <span class="q-mark" aria-hidden="true" style="position: relative; top: -7px">“</span>
+        <blockquote class="q-text" style="position: relative; top: -15px">Es de carácter urgente volver al aula de carne y hueso, es decir, a sus circunstancias, demandas e interpelaciones. De aquí nace una nueva ética docente, en la que lo inmediato determina el camino a construir. El artesano docente construye según la urgencia del aula, y los Otros en el aula participan de esta creación artesanal, que no es otra que la construcción de respuestas.</blockquote>
+        <figcaption class="q-cite"><span class="q-pill">Tesis · p. 19</span>Lo que la máquina borra</figcaption>
+      </figure>
+      <figure class="q q-sm" data-reveal="">
+        <span class="q-mark" aria-hidden="true">“</span>
+        <blockquote class="q-text">No hay centralidad en el aula, todos los involucrados están llamados a responder. El juego permite que todos se involucren en el proceso creativo artesanal. Una mediación sin poder de exclusión permite incluir las diferencias en los artefactos construidos.</blockquote>
+        <figcaption class="q-cite"><span class="q-pill">Tesis · p. 34</span>El aula, donde ocurre «la experiencia primaria de la democracia» (p. 36)</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 02 EL TALLER -->
+  <section id="taller" class="wrap" style="scroll-margin-top: 100px; display: flex; flex-direction: column; gap: 44px; margin-top: -63px">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:18px;max-width:760px">
+        <span class="eyebrow" style="font-size: 18px; position: relative; top: -7px"><b>02</b> / La propuesta filosófico-educativa</span>
+        <h2 class="h2">La acción<br><span class="grad">creativa artesanal.</span></h2>
+      </div>
+      <p class="lead" style="max-width:420px">El docente como <i>homo faber</i>: ejerce su autoridad y autonomía para crear. Lo que fabrica —objetos, actividades, estrategias— perdura y acompaña a los Otros.</p>
+    </div>
+    <figure class="q" data-reveal="" style="padding:clamp(32px,5vw,64px)">
+      <span class="q-mark" aria-hidden="true">“</span>
+      <blockquote class="q-text" style="font-size:clamp(30px,4.2vw,62px)">La respuesta se construye después del encuentro, no antes, y no fuera del aula.</blockquote>
+      <figcaption class="q-cite"><span class="q-pill">Tesis · p. 39</span>El docente como homo faber</figcaption>
+    </figure>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+      <figure class="q q-sm" data-reveal="">
+        <span class="q-mark" aria-hidden="true">“</span>
+        <blockquote class="q-text">Aquello que se crea en conjunto (docente y estudiantes) se convierte en brújulas que nacen sobre el inmediato (la clase) y acompañan al educando en su existencia social e individual.</blockquote>
+        <figcaption class="q-cite"><span class="q-pill">p. 39</span>Lo que fabrica perdura y acompaña</figcaption>
+      </figure>
+      <figure class="q q-sm" data-reveal="">
+        <span class="q-mark" aria-hidden="true">“</span>
+        <blockquote class="q-text" style="position: relative">El buen artesano docente debe producir respuestas, no operar las establecidas. Esto significa hacer un ejercicio constante de imaginación, creación y cierta relación con lo artístico.</blockquote>
+        <figcaption class="q-cite"><span class="q-pill">p. 40</span>El aula-taller</figcaption>
+      </figure>
+      <figure class="q q-sm" data-reveal="">
+        <span class="q-mark" aria-hidden="true">“</span>
+        <blockquote class="q-text">No crea la obra, sino que crea las condiciones para que otros se expresen. He aquí un gran valor del docente artesanal, que permite que otros sean artistas o artesanos. Ya no está solo en el aula: convive para la creación conjunta.</blockquote>
+        <figcaption class="q-cite"><span class="q-pill">p. 41</span>El artesano frente al artista</figcaption>
+      </figure>
+    </div>
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:16px">
+      <div class="card" style="flex:1.4 1 420px;display:flex;flex-direction:column;gap:12px">
+        <span class="eyebrow">Artesano, no artista</span>
+        <p style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:500;font-size:clamp(22px,2.2vw,30px);line-height:1.2;letter-spacing:-.01em;text-wrap:pretty">El artista exterioriza su propia mismidad. <span style="color:#C9B5FF">El artesano crea <i>para</i> y <i>con</i> el otro.</span></p>
+        <p style="margin:0;color:#9FB0C8">Lo artístico queda como cualidad del oficio: el arte de enseñar.</p>
+      </div>
+      <div class="card" style="flex:1 1 300px;display:flex;align-items:center;gap:22px;background:radial-gradient(70% 80% at 20% 50%,rgba(124,77,255,.22),transparent 70%),#0D1B33">
+        <div aria-hidden="true" style="position:relative;flex:0 0 88px;height:88px">
+          <span style="position:absolute;left:50%;bottom:10px;width:58px;height:14px;margin-left:-29px;border-radius:4px;background:#2B3B5E"></span>
+          <span style="position:absolute;left:24px;top:8px;width:6px;height:56px;border-radius:3px;background:#8FB8FF;transform-origin:3px 56px;animation:hammer 1.6s ease-in-out infinite"><span style="position:absolute;left:-12px;top:-4px;width:30px;height:14px;border-radius:3px;background:#A77BFF"></span></span>
+          <span style="position:absolute;left:44px;bottom:24px;width:4px;height:4px"><span style="position:absolute;width:4px;height:10px;border-radius:2px;background:#3FBF8F;--a:-40deg;animation:spark 1.6s .98s ease-out infinite"></span><span style="position:absolute;width:4px;height:10px;border-radius:2px;background:#8FE3C0;--a:0deg;animation:spark 1.6s .98s ease-out infinite"></span><span style="position:absolute;width:4px;height:10px;border-radius:2px;background:#5C8CFF;--a:40deg;animation:spark 1.6s .98s ease-out infinite"></span></span>
+        </div>
+        <p style="margin:0;color:#DCE6F7;text-wrap:pretty"><b>Hefesto</b>, el dios artesano: sus creaciones buscan la paz, entendida como el convivir en diferencia. <span style="color:#9FB0C8">(pp. 40–41)</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 LOS CUATRO GESTOS -->
+  <section id="gestos" class="wrap" style="scroll-margin-top: 100px; display: flex; flex-direction: column; gap: 40px; margin-top: -97px">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+      <span class="eyebrow" style="font-size: 18px"><b>03</b> / Los cuatro gestos del aula-taller · p. 43</span>
+      <h2 class="h2">Compromiso, espera,<br><span class="grad">silencio y juego.</span></h2>
+    </div>
+    <div class="gestos-grid">
+      <article class="card gesto-card" data-reveal="" onClick="{{ gShow0 }}" style="display:flex;flex-direction:column;gap:18px;border-color:rgba(92,140,255,.35)">
+        <div aria-hidden="true" style="position:relative;height:96px;display:grid;place-items:center">
+          <span style="position:absolute;width:56px;height:56px;margin-left:-30px;border-radius:50%;border:5px solid #5C8CFF;animation:spin 6s linear infinite;border-right-color:transparent"></span>
+          <span style="position:absolute;width:56px;height:56px;margin-left:30px;border-radius:50%;border:5px solid #8FB8FF;animation:spin 6s linear infinite reverse;border-left-color:transparent"></span>
+        </div>
+        <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:28px;letter-spacing:-.02em;color:#8FB8FF">Compromiso</h3>
+        <p style="margin:0;color:#9FB0C8">Dedicación a hacer bien el proceso creativo y defenderlo del estándar externo.</p>
+        <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:12px;color:#7F8FAA">p. 43</span><button onClick="{{ gOpen0 }}" aria-expanded="{{ g0 }}" aria-controls="gesto-panel" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid #8FB8FF;background:{{ gBg0 }};color:#F5F7FA;font-size:13px;font-weight:600;cursor:pointer;transition:background .3s" style-hover="background:rgba(143,184,255,.14)">{{ gLabel0 }}</button></div>
+      </article>
+      <article class="card gesto-card" data-reveal="" onClick="{{ gShow1 }}" style="display:flex;flex-direction:column;gap:18px;border-color:rgba(167,123,255,.35)">
+        <div aria-hidden="true" style="height:96px;display:grid;place-items:center">
+          <span style="position:relative;width:46px;height:72px;animation:hourglass 4s cubic-bezier(.6,0,.3,1) infinite">
+            <span style="position:absolute;left:0;top:0;width:0;height:0;border-left:23px solid transparent;border-right:23px solid transparent;border-top:34px solid #A77BFF"></span>
+            <span style="position:absolute;left:0;bottom:0;width:0;height:0;border-left:23px solid transparent;border-right:23px solid transparent;border-bottom:34px solid rgba(167,123,255,.35)"></span>
+          </span>
+        </div>
+        <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:28px;letter-spacing:-.02em;color:#C9B5FF">Espera</h3>
+        <p style="margin:0;color:#9FB0C8">El aula-taller no acelera entregando respuestas: espera que se construyan.</p>
+        <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:12px;color:#7F8FAA">p. 45</span><button onClick="{{ gOpen1 }}" aria-expanded="{{ g1 }}" aria-controls="gesto-panel" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid #C9B5FF;background:{{ gBg1 }};color:#F5F7FA;font-size:13px;font-weight:600;cursor:pointer;transition:background .3s" style-hover="background:rgba(143,184,255,.14)">{{ gLabel1 }}</button></div>
+      </article>
+      <article class="card gesto-card" data-reveal="" onClick="{{ gShow2 }}" style="display:flex;flex-direction:column;gap:18px;border-color:rgba(63,191,143,.35)">
+        <div aria-hidden="true" style="position:relative;height:96px;display:grid;place-items:center">
+          <span style="position:absolute;width:70px;height:70px;border-radius:50%;border:2px solid #3FBF8F;animation:ripple 3s ease-out infinite"></span>
+          <span style="position:absolute;width:70px;height:70px;border-radius:50%;border:2px solid #8FE3C0;animation:ripple 3s 1s ease-out infinite"></span>
+          <span style="position:absolute;width:70px;height:70px;border-radius:50%;border:2px solid #3FBF8F;animation:ripple 3s 2s ease-out infinite"></span>
+          <span style="width:14px;height:14px;border-radius:50%;background:#3FBF8F;box-shadow:0 0 16px #3FBF8F"></span>
+        </div>
+        <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:28px;letter-spacing:-.02em;color:#8FE3C0">Silencio plural</h3>
+        <p style="margin:0;color:#9FB0C8">Escucha profunda y horizontal para que los otros se expresen en sus propios términos.</p>
+        <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:12px;color:#7F8FAA">pp. 45–46</span><button onClick="{{ gOpen2 }}" aria-expanded="{{ g2 }}" aria-controls="gesto-panel" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid #8FE3C0;background:{{ gBg2 }};color:#F5F7FA;font-size:13px;font-weight:600;cursor:pointer;transition:background .3s" style-hover="background:rgba(143,184,255,.14)">{{ gLabel2 }}</button></div>
+      </article>
+      <article class="card gesto-card" data-reveal="" onClick="{{ gShow3 }}" style="display:flex;flex-direction:column;gap:18px;border-color:rgba(143,184,255,.35)">
+        <div aria-hidden="true" style="height:96px;display:flex;align-items:flex-end;justify-content:center;gap:12px;padding-bottom:16px">
+          <span style="width:20px;height:20px;border-radius:50%;background:#5C8CFF;animation:bounce 1.2s ease-in-out infinite"></span>
+          <span style="width:20px;height:20px;border-radius:6px;background:#A77BFF;animation:bounce 1.2s .15s ease-in-out infinite"></span>
+          <span style="width:20px;height:20px;border-radius:50%;background:#3FBF8F;animation:bounce 1.2s .3s ease-in-out infinite"></span>
+        </div>
+        <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:28px;letter-spacing:-.02em;background:linear-gradient(90deg,#8FB8FF,#C9B5FF,#8FE3C0);-webkit-background-clip:text;background-clip:text;color:transparent">Juego</h3>
+        <p style="margin:0;color:#9FB0C8">La meta surge del encuentro; los caminos se fabrican juntos. El docente es un <span class="serif" style="font-style:italic;color:#DCE6F7;font-size:1.1em">«estratega paciente y comprometido»</span>.</p>
+        <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px"><span style="font-size:12px;color:#7F8FAA">pp. 47–49</span><button onClick="{{ gOpen3 }}" aria-expanded="{{ g3 }}" aria-controls="gesto-panel" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid #C9B5FF;background:{{ gBg3 }};color:#F5F7FA;font-size:13px;font-weight:600;cursor:pointer;transition:background .3s" style-hover="background:rgba(143,184,255,.14)">{{ gLabel3 }}</button></div>
+      </article>
+    </div>
+    <sc-if value="{{ gAny }}" hint-placeholder-val="{{ false }}">
+    <div id="gesto-panel" role="dialog" aria-modal="true" aria-label="Gesto ético del aula-taller" onClick="{{ gBackdrop }}" style="position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vw,32px);background:rgba(3,7,14,.74);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)">
+      <div style="width:min(1100px,100%);max-height:calc(100vh - 32px);overflow-y:auto;border-radius:28px;box-shadow:0 30px 90px rgba(0,0,0,.6)">
+      <sc-if value="{{ g0 }}" hint-placeholder-val="{{ false }}">
+        <div class="card" style="display:flex;flex-wrap:wrap;gap:28px 40px;border-color:rgba(92,140,255,.5);background:radial-gradient(70% 90% at 100% 0%, rgba(124,77,255,.14), transparent 65%), #0D1B33;animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both">
+          <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span class="eyebrow">Gesto ético del aula-taller</span>
+              <button onClick="{{ gClose }}" aria-label="Cerrar" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(143,184,255,.25);background:transparent;color:#F5F7FA;font-size:18px;cursor:pointer" style-hover="background:rgba(143,184,255,.12)">×</button>
+            </div>
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(34px,4vw,56px);line-height:.95;letter-spacing:-.03em;color:#8FB8FF">Compromiso</h3>
+            <p style="margin:0;color:#DCE6F7;font-size:17px;line-height:1.65;text-wrap:pretty">En la acción artesanal docente, el compromiso es la dedicación y entrega al proceso creativo del aula-taller: velar por su mejor realización posible sin que lo producido refleje al docente en lugar del grupo. También implica proteger la labor artesanal frente a las intervenciones externas que intenten someterla a la cadena de producción educativa.</p>
+            <div style="padding:16px 18px;border-radius:16px;border:1px dashed rgba(92,140,255,.5);display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8FB8FF">En el aula</span>
+              <p class="serif" style="margin:0;font-style:italic;font-size:19px;line-height:1.4;color:#F5F7FA">«el interés por la creación de un documental puede convertirse en horas de dedicación, en ideas por agregar, recursos por explorar y eventualidades por sobrellevar»</p>
+              <span style="font-size:12px;color:#9FB0C8">Tesis, p. 44</span>
+            </div>
+          </div>
+          <div style="flex:1.1 1 360px;min-width:0;display:flex;flex-direction:column;gap:12px">
+            <blockquote style="margin:0;padding:14px 18px;border-left:3px solid #8FB8FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«la voluntad de hacer bien algo por el simple hecho de hacerlo bien, es decir, dedicación»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Sennett (2009, p. 78), citado en la tesis, p. 43</span></blockquote><blockquote style="margin:0;padding:14px 18px;border-left:3px solid #8FB8FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«Es ser partícipe activo, no espectador del proceso creativo»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 44</span></blockquote><blockquote style="margin:0;padding:14px 18px;border-left:3px solid #8FB8FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«El compromiso no es por terminar con la tarea o actividad, ni en esperar que finalice las horas de estudio, es verse satisfechos ante la necesidad, duda o contingencia que se tenía.»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 44</span></blockquote>
+            <p class="serif" style="margin:6px 0 0;font-style:italic;font-size:17px;color:#9FB0C8">«En últimas, ser docente, es estar para con los otros.» <span style="font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px">Tesis, p. 49</span></p>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ g1 }}" hint-placeholder-val="{{ false }}">
+        <div class="card" style="display:flex;flex-wrap:wrap;gap:28px 40px;border-color:rgba(167,123,255,.5);background:radial-gradient(70% 90% at 100% 0%, rgba(124,77,255,.14), transparent 65%), #0D1B33;animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both">
+          <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span class="eyebrow">Gesto ético del aula-taller</span>
+              <button onClick="{{ gClose }}" aria-label="Cerrar" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(143,184,255,.25);background:transparent;color:#F5F7FA;font-size:18px;cursor:pointer" style-hover="background:rgba(143,184,255,.12)">×</button>
+            </div>
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(34px,4vw,56px);line-height:.95;letter-spacing:-.03em;color:#C9B5FF">Espera</h3>
+            <p style="margin:0;color:#DCE6F7;font-size:17px;line-height:1.65;text-wrap:pretty">Frente al tiempo atomizado y eficiente de nuestra época, la tesis retoma con Byung-Chul Han un tiempo contemplativo que posibilita la creación. Hacer con los Otros exige esperar su disponibilidad y su proceso singular: el tiempo deja de disciplinar y se vuelve un recurso para crear.</p>
+            <div style="padding:16px 18px;border-radius:16px;border:1px dashed rgba(167,123,255,.5);display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9B5FF">El tiempo de los Otros</span>
+              <p class="serif" style="margin:0;font-style:italic;font-size:19px;line-height:1.4;color:#F5F7FA">«Abocarse a los Otros implica atender a su tiempo: a sus ritmos, vibraciones y latencias.»</p>
+              <span style="font-size:12px;color:#9FB0C8">Tesis, p. 44</span>
+            </div>
+          </div>
+          <div style="flex:1.1 1 360px;min-width:0;display:flex;flex-direction:column;gap:12px">
+            <blockquote style="margin:0;padding:14px 18px;border-left:3px solid #C9B5FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«El aula-taller, no acelera entregando las respuestas, espera que estas se construyan; pacientes con el tiempo necesario. Dicho taller, es un espacio para el proceso, no para el cumplimiento.»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 45</span></blockquote><blockquote style="margin:0;padding:14px 18px;border-left:3px solid #C9B5FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«los caminantes requieren de tiempo para hacer su camino»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 45</span></blockquote><blockquote style="margin:0;padding:14px 18px;border-left:3px solid #C9B5FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«el tiempo, deja de ser una forma de disciplinar, y pasa a ser un recurso que las alteridades me exigen para contemplar, reflexionar y construir»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 45</span></blockquote>
+            <p class="serif" style="margin:6px 0 0;font-style:italic;font-size:17px;color:#9FB0C8">«En últimas, ser docente, es estar para con los otros.» <span style="font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px">Tesis, p. 49</span></p>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ g2 }}" hint-placeholder-val="{{ false }}">
+        <div class="card" style="display:flex;flex-wrap:wrap;gap:28px 40px;border-color:rgba(63,191,143,.5);background:radial-gradient(70% 90% at 100% 0%, rgba(124,77,255,.14), transparent 65%), #0D1B33;animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both">
+          <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span class="eyebrow">Gesto ético del aula-taller</span>
+              <button onClick="{{ gClose }}" aria-label="Cerrar" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(143,184,255,.25);background:transparent;color:#F5F7FA;font-size:18px;cursor:pointer" style-hover="background:rgba(143,184,255,.12)">×</button>
+            </div>
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(34px,4vw,56px);line-height:.95;letter-spacing:-.03em;color:#8FE3C0">Silencio plural</h3>
+            <p style="margin:0;color:#DCE6F7;font-size:17px;line-height:1.65;text-wrap:pretty">No es el silencio que precede la entrada al aula: es un silencio horizontal que escucha y habla con responsabilidad de los Otros. Retiene la respuesta estandarizada para que los estudiantes se expresen en sus propios términos y añadan su huella a lo que se construye.</p>
+            <div style="padding:16px 18px;border-radius:16px;border:1px dashed rgba(63,191,143,.5);display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8FE3C0">En el aula</span>
+              <p class="serif" style="margin:0;font-style:italic;font-size:19px;line-height:1.4;color:#F5F7FA">«los educandos complementan la tarea docente, cuando estos la extienden a niveles insospechados, que pasan de la historia de Colombia, a la reconstrucción de la historia local urbana desde sus experiencias de vida»</p>
+              <span style="font-size:12px;color:#9FB0C8">Tesis, p. 46</span>
+            </div>
+          </div>
+          <div style="flex:1.1 1 360px;min-width:0;display:flex;flex-direction:column;gap:12px">
+            <blockquote style="margin:0;padding:14px 18px;border-left:3px solid #8FE3C0;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«No es mutismo sin palabra, sino escucha profunda.»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 45</span></blockquote><blockquote style="margin:0;padding:14px 18px;border-left:3px solid #8FE3C0;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«habla guardando silencio y cuestionando la univocidad del sentido»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Chun (2019, p. 95), citado en la tesis, p. 45</span></blockquote><blockquote style="margin:0;padding:14px 18px;border-left:3px solid #8FE3C0;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«El docente que llega hablando sin primero escuchar niega a la multitud de alteridades que tienen mucho por comunicar.»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 46</span></blockquote>
+            <p class="serif" style="margin:6px 0 0;font-style:italic;font-size:17px;color:#9FB0C8">«En últimas, ser docente, es estar para con los otros.» <span style="font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px">Tesis, p. 49</span></p>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ g3 }}" hint-placeholder-val="{{ false }}">
+        <div class="card" style="display:flex;flex-wrap:wrap;gap:28px 40px;border-color:rgba(143,184,255,.5);background:radial-gradient(70% 90% at 100% 0%, rgba(124,77,255,.14), transparent 65%), #0D1B33;animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) both">
+          <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span class="eyebrow">Gesto ético del aula-taller</span>
+              <button onClick="{{ gClose }}" aria-label="Cerrar" style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(143,184,255,.25);background:transparent;color:#F5F7FA;font-size:18px;cursor:pointer" style-hover="background:rgba(143,184,255,.12)">×</button>
+            </div>
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(34px,4vw,56px);line-height:.95;letter-spacing:-.03em;color:#C9B5FF">Juego</h3>
+            <p style="margin:0;color:#DCE6F7;font-size:17px;line-height:1.65;text-wrap:pretty">En el juego la meta es fijada por los Otros, que se incluyen como partícipes de la aventura. Frente a la «seriedad excesiva de los adultos» (Saint-Exupéry), el aula-taller adopta una actitud lúdica, motivante y flexible, con metas que surgen del encuentro y caminos que se fabrican juntos.</p>
+            <div style="padding:16px 18px;border-radius:16px;border:1px dashed rgba(143,184,255,.5);display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#C9B5FF">Lo que es el juego</span>
+              <p class="serif" style="margin:0;font-style:italic;font-size:19px;line-height:1.4;color:#F5F7FA">«El juego, más que una metáfora, es parte del proceso artesanal»</p>
+              <span style="font-size:12px;color:#9FB0C8">Tesis, p. 49</span>
+            </div>
+          </div>
+          <div style="flex:1.1 1 360px;min-width:0;display:flex;flex-direction:column;gap:12px">
+            <blockquote style="margin:0;padding:14px 18px;border-left:3px solid #C9B5FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«acción u ocupación libre, que se desarrolla dentro de unos límites temporales y espaciales determinados, según reglas absolutamente obligatorias, aunque libremente aceptadas»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Huizinga (1938, p. 15), citado en la tesis, p. 47</span></blockquote><blockquote style="margin:0;padding:14px 18px;border-left:3px solid #C9B5FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«el juego se incluye como capaz de soportar la multiplicidad de alteridades y de respuestas, además de estar abierto a miles de formas distintas de llegar a una misma meta»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 47</span></blockquote><blockquote style="margin:0;padding:14px 18px;border-left:3px solid #C9B5FF;border-radius:0 14px 14px 0;background:rgba(143,184,255,.06);font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:clamp(18px,1.6vw,22px);line-height:1.35;color:#F5F7FA">«se ubica como un estratega paciente y comprometido con hallar y fabricar junto a sus educandos el mejor camino posible»<span style="display:block;margin-top:6px;font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px;color:#9FB0C8">Tesis, p. 49</span></blockquote>
+            <p class="serif" style="margin:6px 0 0;font-style:italic;font-size:17px;color:#9FB0C8">«En últimas, ser docente, es estar para con los otros.» <span style="font-family:'General Sans',system-ui,sans-serif;font-style:normal;font-size:12px">Tesis, p. 49</span></p>
+          </div>
+        </div>
+      </sc-if>
+      </div>
+    </div>
+    </sc-if>
+  </section>
+
+  <!-- 04 EL MÉTODO -->
+  <section id="metodo" class="wrap" style="scroll-margin-top: 100px; display: flex; flex-direction: column; gap: 40px; margin-top: -97px">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span class="eyebrow" style="font-size: 18px"><b>04</b> / El método</span>
+        <h2 class="h2">Tres fases,<br><span class="grad">un ciclo.</span></h2>
+      </div>
+      <p class="lead" style="max-width: 422px; position: absolute; left: 580px; top: 33px; width: 428px; height: 101px; line-height: 1.8; color: #f5f7fa; font-size: Clamp(23px,1.35vw,25px)">Todas mis clases comparten la misma estructura: apertura, construcción de artefactos artesanales y recuerdo.</p>
+    </div>
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:16px;align-items:stretch">
+      <div class="card" style="flex:1 1 360px;display:grid;place-items:center;background:radial-gradient(60% 60% at 50% 50%,rgba(124,77,255,.18),transparent 70%),#0D1B33">
+        <div style="position:relative;width:min(320px,74vw);aspect-ratio:1">
+          <svg viewBox="0 0 300 300" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+            <circle cx="150" cy="150" r="120" style="fill:none;stroke:rgba(143,184,255,.14);stroke-width:8"></circle>
+            <circle cx="150" cy="150" r="120" transform="rotate(-90 150 150)" style="fill:none;stroke:{{ mColor }};stroke-width:8;stroke-linecap:round;stroke-dasharray:754;stroke-dashoffset:{{ mDash }};transition:stroke-dashoffset .2s linear, stroke .6s"></circle>
+            <g style="transform-origin:150px 150px;animation:spin 30s linear infinite"><circle cx="150" cy="150" r="140" style="fill:none;stroke:rgba(167,123,255,.35);stroke-width:1;stroke-dasharray:2 8"></circle></g>
+          </svg>
+          <sc-for list="{{ mnodes }}" as="n" hint-placeholder-count="3">
+            <button class="mnode" onClick="{{ n.go }}" aria-label="{{ n.label }}" aria-pressed="{{ n.pressed }}" style="left:{{ n.x }};top:{{ n.y }};--c:{{ n.c }};background:{{ n.bg }};box-shadow:{{ n.glow }};transform:translate(-50%,-50%) scale({{ n.s }})">{{ n.n }}</button>
+          </sc-for>
+          <div style="position:absolute;inset:26%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4px">
+            <span style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#9FB0C8">Fase</span>
+            <span style="font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(20px,2.4vw,28px);line-height:1;letter-spacing:-.02em;color:{{ mColor }};transition:color .6s">{{ mName }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="flex:1.3 1 420px;min-width:0;display:flex;flex-direction:column;gap:20px;min-height:420px">
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+          <sc-for list="{{ mtabs }}" as="t" hint-placeholder-count="3">
+            <button onClick="{{ t.go }}" aria-pressed="{{ t.pressed }}" style="position:relative;overflow:hidden;padding:12px 10px 15px;border-radius:16px;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.ink }};font-weight:700;font-size:14px;cursor:pointer;transition:border-color .3s, background .3s">{{ t.name }}<span style="position:absolute;left:0;bottom:0;height:3px;width:{{ t.fill }}%;background:{{ t.c }};transition:width .2s linear"></span></button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ m0 }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:16px;animation:fadeUp .6s both">
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(28px,3vw,42px);letter-spacing:-.03em;color:#8FB8FF">Apertura</h3>
+            <p style="margin:0;color:#DCE6F7;font-size:17px;text-wrap:pretty">Una <b>hipótesis, pregunta o máxima</b> que hace nacer una necesidad por resolver. Es el momento de escuchar antes de hablar.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="chip" style="border-color:rgba(63,191,143,.4)">Silencio plural</span><span class="chip" style="border-color:rgba(167,123,255,.4)">Espera</span></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ m1 }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:16px;animation:fadeUp .6s both">
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(28px,3vw,42px);letter-spacing:-.03em;color:#C9B5FF">Construcción de artefactos artesanales</h3>
+            <p style="margin:0;color:#DCE6F7;font-size:17px;text-wrap:pretty">Medio la construcción de una respuesta. Entre todos decidimos <b>la mejor forma de comunicar la idea</b>, también para alguien externo: el estudiante aprende a comunicar lo que hace, como un artesano.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ artefacts }}" as="a" hint-placeholder-count="8"><span class="chip" style="animation:pop .4s cubic-bezier(.3,1.5,.5,1) both;animation-delay:{{ a.d }}">{{ a.t }}</span></sc-for>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px"><span class="chip" style="border-color:rgba(143,184,255,.45)">Juego</span><span class="chip" style="border-color:rgba(92,140,255,.45)">Compromiso</span></div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ m2 }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:16px;animation:fadeUp .6s both">
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(28px,3vw,42px);letter-spacing:-.03em;color:#8FE3C0">Recuerdo</h3>
+            <p style="margin:0;color:#DCE6F7;font-size:17px;text-wrap:pretty">No es una evaluación: una creación artesanal no se mide contra un estándar, <b>se interpreta</b>. Busco entender cómo el estudiante recordará lo que hizo.</p>
+            <p class="serif" style="margin:0;font-style:italic;font-size:clamp(26px,3vw,40px);line-height:1.15;background:linear-gradient(90deg,#8FE3C0,#8FB8FF);-webkit-background-clip:text;background-clip:text;color:transparent">¿Qué me llevo hoy?</p>
+            <p style="margin:0;color:#9FB0C8">¿Qué voy a cargar por el resto de mi existencia de lo que hoy se construyó?</p>
+          </div>
+        </sc-if>
+        <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:18px;border-top:1px solid rgba(143,184,255,.14)">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-weight:600">Siempre se está haciendo algo</span><span style="font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:28px;color:#8FE3C0">80%</span></div>
+          <div style="height:8px;border-radius:999px;background:rgba(143,184,255,.14);overflow:hidden"><div style="height:100%;width:80%;border-radius:999px;background:linear-gradient(90deg,#5C8CFF,#A77BFF,#3FBF8F);transform-origin:left;animation:growX 1.8s cubic-bezier(.4,0,.2,1) both"></div></div>
+          <span style="font-size:14px;color:#9FB0C8">Clases prácticas, con verificación constante: preguntas directas o confirmación a viva voz.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 TRES CLASES -->
+  <section id="clases" class="wrap" style="scroll-margin-top: 100px; display: flex; flex-direction: column; gap: 36px; margin-top: -90px">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+      <span class="eyebrow" style="font-size: 18px"><b>05</b> / Ejemplos prácticos en el aula</span>
+      <h2 class="h2">Tres clases,<br><span class="grad">tres artefactos.</span></h2>
+    </div>
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ ctabs }}" as="t" hint-placeholder-count="4">
+          <button onClick="{{ t.go }}" aria-pressed="{{ t.pressed }}" style="position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;padding:10px 18px 13px;border-radius:18px;border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.ink }};cursor:pointer;text-align:left;transition:border-color .3s, background .3s"><span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:{{ t.c }}">{{ t.n }}</span><span style="font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:700;font-size:16px">{{ t.name }}</span><span style="position:absolute;left:0;bottom:0;height:3px;width:{{ t.fill }}%;background:{{ t.c }};transition:width .2s linear"></span></button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ c0 }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:stretch">
+          <div class="card" style="flex:1.1 1 380px;padding:10px">
+            <div class="scene" aria-hidden="true" style="background:radial-gradient(70% 70% at 50% 40%,rgba(47,107,255,.2),transparent 70%),#081326">
+              <div style="position:absolute;left:8%;right:8%;top:8%;height:46px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(90deg,#2F6BFF,#7C4DFF);font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(14px,1.5vw,18px);letter-spacing:.06em;text-transform:uppercase;transform-origin:left;animation:growX .9s 1.6s cubic-bezier(.4,0,.2,1) both">Infografía colectiva</div>
+              <span style="position:absolute;left:30%;right:30%;top:48%;height:2px;background:rgba(143,184,255,.35);transform-origin:left;animation:growX .8s 1.9s both"></span>
+              <span style="position:absolute;left:50%;top:30%;bottom:22%;width:2px;background:rgba(143,184,255,.35);transform-origin:top;animation:lineFill .8s 1.9s both"></span>
+              <span class="c1chip" style="--x0:12%;--y0:90%;--x1:28%;--y1:34%;--r:-18deg;--d:.1s;background:#2F6BFF">Globalización</span>
+              <span class="c1chip" style="--x0:88%;--y0:12%;--x1:72%;--y1:34%;--r:14deg;--d:.3s;background:#7C4DFF">Identidad</span>
+              <span class="c1chip" style="--x0:6%;--y0:20%;--x1:28%;--y1:58%;--r:10deg;--d:.5s;background:#1F8F67">Periferia</span>
+              <span class="c1chip" style="--x0:94%;--y0:80%;--x1:72%;--y1:58%;--r:-12deg;--d:.7s;background:#5C3BC4">Resistencia</span>
+              <span class="c1chip" style="--x0:50%;--y0:104%;--x1:50%;--y1:82%;--r:8deg;--d:.9s;background:#2456D6">Soberanía</span>
+            </div>
+          </div>
+          <div class="card" style="flex:1 1 360px;display:flex;flex-direction:column;gap:22px">
+            <div style="display:flex;flex-direction:column;gap:6px"><span class="eyebrow">Clase 1</span><h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(26px,2.6vw,36px);letter-spacing:-.02em">Globalización e identidad</h3></div>
+            <div class="tl">
+              <div class="tl-i" style="--d:.2s"><span class="tl-n" style="--c:#5C8CFF;--d:.2s"></span><b style="color:#8FB8FF">Apertura</b><p style="margin:4px 0 0;color:#DCE6F7"><i>¿Cómo superar las consecuencias del neoliberalismo allí donde pone en riesgo la identidad de los pueblos, las ciudades y las periferias?</i> Una pregunta demasiado grande, que exige la intervención de los estudiantes.</p></div>
+              <div class="tl-i" style="--d:.7s"><span class="tl-n" style="--c:#A77BFF;--d:.7s"></span><b style="color:#C9B5FF">Construcción</b><p style="margin:4px 0 0;color:#DCE6F7">Medio con cinco conceptos. El grupo decide que el mejor artefacto es una <b>infografía</b> que integra las identidades y las formas de ver, estar y sentir en el mundo, más allá de la homogeneización y la exclusión.</p></div>
+              <div class="tl-i" style="--d:1.2s"><span class="tl-n" style="--c:#3FBF8F;--d:1.2s"></span><b style="color:#8FE3C0">Recuerdo</b><p style="margin:4px 0 0;color:#DCE6F7">La infografía es memoria porque fue una decisión creativa de todos.</p></div>
+            </div>
+            <p class="serif grad" style="margin:auto 0 0;font-style:italic;font-size:clamp(28px,3vw,42px);line-height:1.1">¿Qué me llevo hoy?</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ c1 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:stretch">
+          <div class="card" style="flex:1.1 1 380px;padding:10px">
+            <div class="scene" aria-hidden="true" style="background:repeating-linear-gradient(0deg,rgba(13,27,51,.06) 0 1px,transparent 1px 34px),repeating-linear-gradient(90deg,rgba(13,27,51,.05) 0 1px,transparent 1px 68px),#EEF1F7">
+              <span class="wallw" style="left:8%;right:8%;top:38%;--r:-4deg;--d:.2s;font-size:clamp(26px,3.4vw,46px);line-height:1;white-space:normal;text-align:center;color:#2F4FD6">Yo tengo un sueño</span>
+              <span class="wallw" style="left:10%;top:12%;--r:-8deg;--d:.7s;font-size:clamp(18px,2vw,26px);color:#6A3BE0">Libertad</span>
+              <span class="wallw" style="right:9%;top:16%;--r:6deg;--d:1s;font-size:clamp(20px,2.2vw,30px);color:#1B8F63">Dignidad</span>
+              <span class="wallw" style="left:12%;bottom:14%;--r:5deg;--d:1.3s;font-size:clamp(18px,2vw,26px);color:#1B8F63">Igualdad</span>
+              <span class="wallw" style="right:10%;bottom:20%;--r:-6deg;--d:1.6s;font-size:clamp(22px,2.4vw,32px);color:#6A3BE0">Justicia</span>
+              <span class="wallw" style="left:46%;top:24%;--r:3deg;--d:1.9s;font-size:clamp(14px,1.5vw,18px);color:#2F4FD6;font-family:'EB Garamond',Georgia,serif;font-style:italic;text-transform:none;font-weight:500">el pensamiento se hace en el presente</span>
+            </div>
+          </div>
+          <div class="card" style="flex:1 1 360px;display:flex;flex-direction:column;gap:22px">
+            <div style="display:flex;flex-direction:column;gap:6px"><span class="eyebrow">Clase 2</span><h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(26px,2.6vw,36px);letter-spacing:-.02em">La máxima: <span class="serif" style="font-style:italic;font-weight:500">Yo tengo un sueño</span></h3></div>
+            <div class="tl">
+              <div class="tl-i" style="--d:.2s"><span class="tl-n" style="--c:#5C8CFF;--d:.2s"></span><b style="color:#8FB8FF">Apertura</b><p style="margin:4px 0 0;color:#DCE6F7">Una <b>máxima</b>: una frase al estilo escolástico que condensa mucha información (Galeano, libros de síntesis en frases, infografías y esquemas). Explico el contexto: el discurso de Martin Luther King y la emancipación del pueblo afroamericano.</p></div>
+              <div class="tl-i" style="--d:.7s"><span class="tl-n" style="--c:#A77BFF;--d:.7s"></span><b style="color:#C9B5FF">Construcción</b><p style="margin:4px 0 0;color:#DCE6F7">Grafiti, eslóganes y una pared cubierta de frases emancipadoras: no solo discursos, sino intenciones, proyectos y búsqueda de soluciones reales.</p></div>
+              <div class="tl-i" style="--d:1.2s"><span class="tl-n" style="--c:#3FBF8F;--d:1.2s"></span><b style="color:#8FE3C0">Recuerdo</b><p style="margin:4px 0 0;color:#DCE6F7">Recordarán que pintaron la pared y que frases de hace décadas pueden comunicarse artesanalmente en el presente.</p></div>
+            </div>
+            <p class="serif grad" style="margin:auto 0 0;font-style:italic;font-size:clamp(26px,2.8vw,40px);line-height:1.1">La palabra aún tiene una función.</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ c2 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:stretch">
+          <div class="card" style="flex:1.1 1 380px;padding:10px">
+            <div class="scene" aria-hidden="true" style="background:radial-gradient(70% 70% at 50% 30%,rgba(124,77,255,.22),transparent 70%),#0A1426">
+              <div style="position:absolute;left:12%;right:12%;top:8%;bottom:8%;border-radius:16px;background:#F3F5FA;box-shadow:0 20px 50px rgba(0,0,0,.4);padding:22px 22px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px">
+                <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5C3BC4;font-weight:700">Modo vigía · Galeano · 3 páginas</span>
+                <span style="height:8px;border-radius:4px;background:#C9D1E3;width:92%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:86%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:95%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:70%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:90%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:82%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:94%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:64%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:88%"></span><span style="height:8px;border-radius:4px;background:#C9D1E3;width:76%"></span>
+              </div>
+              <span style="position:absolute;left:12%;right:12%;height:18px;background:linear-gradient(90deg,rgba(124,77,255,0),rgba(124,77,255,.35),rgba(124,77,255,0));animation:scanDown 9s linear infinite"></span>
+              <div style="position:absolute;left:6%;right:6%;bottom:10%;display:grid">
+                <span style="grid-area:1/1;padding:14px 18px;border-radius:14px;background:#7C4DFF;color:#fff;font-weight:600;box-shadow:0 14px 34px rgba(124,77,255,.5);animation:popAct 9s infinite">¿Cuál es el significado de la última palabra que leíste?</span>
+                <span style="grid-area:1/1;padding:14px 18px;border-radius:14px;background:#2F6BFF;color:#fff;font-weight:600;box-shadow:0 14px 34px rgba(47,107,255,.5);animation:popAct 9s 3s infinite;opacity:0">Construye un esquema con los últimos cinco conceptos.</span>
+                <span style="grid-area:1/1;padding:14px 18px;border-radius:14px;background:#1F8F67;color:#fff;font-weight:600;box-shadow:0 14px 34px rgba(31,143,103,.5);animation:popAct 9s 6s infinite;opacity:0">Cambia de puesto con tu compañero.</span>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="flex:1 1 360px;display:flex;flex-direction:column;gap:22px">
+            <div style="display:flex;flex-direction:column;gap:6px"><span class="eyebrow">Clase 3 · Versión A · Res Cogitans</span><h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(26px,2.6vw,36px);letter-spacing:-.02em">Presentaciones Interactivas</h3></div>
+            <div class="tl">
+              <div class="tl-i" style="--d:.2s"><span class="tl-n" style="--c:#5C8CFF;--d:.2s"></span><b style="color:#8FB8FF">Modo vigía</b><p style="margin:4px 0 0;color:#DCE6F7">El material ya existe; falta la intervención del docente artesano, que desde su experiencia y su razón práctica <b>activa momentos</b>: una lectura extensa o un documental que se pausa y se abre en actividades.</p></div>
+              <div class="tl-i" style="--d:.7s"><span class="tl-n" style="--c:#A77BFF;--d:.7s"></span><b style="color:#C9B5FF">Activadores</b><p style="margin:4px 0 0;color:#DCE6F7">Esquemas, diagramas de Venn, cuadros comparativos; cambiar de puesto, intercambiar cuadernos, diseñar una pregunta para el compañero, explicarle lo último que se entendió.</p></div>
+              <div class="tl-i" style="--d:1.2s"><span class="tl-n" style="--c:#3FBF8F;--d:1.2s"></span><b style="color:#8FE3C0">Modo clásico</b><p style="margin:4px 0 0;color:#DCE6F7">Diapositiva seguida de actividad: ruleta de preguntas, ahorcado, crucigrama, sopa de letras… entre <b>32 tipos de actividades</b>.</p></div>
+            </div>
+            <p class="serif grad" style="margin:auto 0 0;font-style:italic;font-size:clamp(26px,2.8vw,40px);line-height:1.1">El artesano activa el momento.</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ c3 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:stretch">
+          <div class="card" style="flex:1.1 1 380px;padding:10px">
+            <div class="scene" aria-hidden="true" style="display:flex;flex-direction:column;justify-content:center;gap:18px;padding:24px;background:radial-gradient(70% 70% at 50% 50%,rgba(63,191,143,.18),transparent 70%),#081A1C">
+              <p class="serif" style="margin:0;text-align:center;font-style:italic;font-size:clamp(22px,2.4vw,32px);color:#F5F7FA">¿Qué es la economía?</p>
+              <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px">
+                <div style="padding:16px;border-radius:16px;background:rgba(92,140,255,.12);border:1px solid rgba(92,140,255,.4);display:flex;flex-direction:column;gap:10px">
+                  <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8FB8FF;font-weight:700">Quiz de entrada</span>
+                  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px">
+                    <sc-for list="{{ qdotsIn }}" as="d" hint-placeholder-count="18"><span style="aspect-ratio:1;border-radius:50%;background:{{ d.c }};animation:pop .35s cubic-bezier(.3,1.5,.5,1) both;animation-delay:{{ d.d }}"></span></sc-for>
+                  </div>
+                  <span style="font-size:13px;color:#9FB0C8">Preconceptos en vivo</span>
+                </div>
+                <span style="font-size:26px;color:#8FE3C0;animation:nudgeX 1.6s ease-in-out infinite">⟶</span>
+                <div style="padding:16px;border-radius:16px;background:rgba(63,191,143,.12);border:1px solid rgba(63,191,143,.45);display:flex;flex-direction:column;gap:10px">
+                  <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8FE3C0;font-weight:700">Quiz de salida</span>
+                  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px">
+                    <sc-for list="{{ qdotsOut }}" as="d" hint-placeholder-count="18"><span style="aspect-ratio:1;border-radius:50%;background:{{ d.c }};animation:pop .35s cubic-bezier(.3,1.5,.5,1) both;animation-delay:{{ d.d }}"></span></sc-for>
+                  </div>
+                  <span style="font-size:13px;color:#9FB0C8">Lo que se lleva</span>
+                </div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px"><span class="chip">Smiggle · personaje metacognitivo</span><span class="chip">Activadores físicos</span></div>
+            </div>
+          </div>
+          <div class="card" style="flex:1 1 360px;display:flex;flex-direction:column;gap:22px">
+            <div style="display:flex;flex-direction:column;gap:6px"><span class="eyebrow">Clase 3 · Versión B · Res Cogitans</span><h3 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(26px,2.6vw,36px);letter-spacing:-.02em">Desafíate</h3></div>
+            <div class="tl">
+              <div class="tl-i" style="--d:.2s"><span class="tl-n" style="--c:#5C8CFF;--d:.2s"></span><b style="color:#8FB8FF">Apertura · quiz de entrada</b><p style="margin:4px 0 0;color:#DCE6F7">Todos saben algo de economía, pero está revuelto. El diagnóstico revela los preconceptos: las respuestas se ven y se valoran en vivo, y sé hacia dónde llevar la clase.</p></div>
+              <div class="tl-i" style="--d:.7s"><span class="tl-n" style="--c:#A77BFF;--d:.7s"></span><b style="color:#C9B5FF">Construcción</b><p style="margin:4px 0 0;color:#DCE6F7">Las diapositivas ya preparadas se acoplan a las respuestas; también suelto preguntas en vivo que no alcancé a construir.</p></div>
+              <div class="tl-i" style="--d:1.2s"><span class="tl-n" style="--c:#3FBF8F;--d:1.2s"></span><b style="color:#8FE3C0">Recuerdo · quiz de salida</b><p style="margin:4px 0 0;color:#DCE6F7">El mismo desafío se repite para verificar qué se lleva el estudiante.</p></div>
+            </div>
+            <p class="serif grad" style="margin:auto 0 0;font-style:italic;font-size:clamp(26px,2.8vw,40px);line-height:1.1">Entrada y salida.</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isRC }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;padding:20px 24px;border-radius:20px;border:1px dashed rgba(167,123,255,.4);background:rgba(124,77,255,.06);animation:fadeUp .6s both">
+          <span style="font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:18px;color:#C9B5FF">Res Cogitans como hilo conductor</span>
+          <span style="flex:1 1 380px;color:#DCE6F7;text-wrap:pretty">Una herramienta forjada en el taller, desde el encuentro: la plataforma no reemplaza al artesano, le hace más fácil el oficio. En cada sesión uso una sola plataforma, porque cada una tiene un estilo distinto.</span>
+          <a href="res-cogitans.html" style="font-weight:600;color:#C9B5FF" style-hover="color:#F5F7FA">Conocer Res Cogitans →</a>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- FRASES -->
+  <div aria-hidden="true" style="overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+    <div style="display:flex;gap:14px;width:max-content;animation:marq 60s linear infinite">
+      <sc-for list="{{ marquee }}" as="m" hint-placeholder-count="10">
+        <span style="flex-shrink: 0; display: flex; align-items: center; gap: 14px; padding: 16px 28px; border-radius: 999px; border: 1px solid rgba(143,184,255,.16); white-space: nowrap; position: relative; top: -26px; left: 2px"><span style="width:8px;height:8px;border-radius:50%;background:{{ m.c }};box-shadow:0 0 10px {{ m.c }}"></span><span class="serif" style="font-style:italic;font-size:clamp(20px,2vw,28px)">{{ m.t }}</span><span style="font-size:12px;color:#9FB0C8">{{ m.p }}</span></span>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- 06 CIERRE -->
+  <section class="wrap">
+    <div data-reveal="" style="position:relative;overflow:hidden;border-radius:40px;padding:clamp(32px,6vw,88px);display:flex;flex-direction:column;gap:40px;background:radial-gradient(60% 80% at 85% 10%,rgba(124,77,255,.5),transparent 65%),radial-gradient(50% 60% at 5% 100%,rgba(63,191,143,.3),transparent 70%),radial-gradient(50% 60% at 40% 40%,rgba(47,107,255,.28),transparent 70%),#0D1B33;border:1px solid rgba(167,123,255,.25)">
+      <span class="eyebrow" style="color:#C9B5FF">Cierre</span>
+      <figure class="q" style="background:transparent;border:none;padding:0">
+        <blockquote class="q-text" style="font-size:clamp(34px,5vw,76px);line-height:1.08">Cada aula es singular y, por ende, cada respuesta debe serlo igual.</blockquote>
+        <figcaption class="q-cite"><span class="q-pill">Tesis · p. 51</span></figcaption>
+      </figure>
+      <figure class="q q-sm" style="background:transparent;border:none;padding:0;max-width:760px">
+        <blockquote class="q-text">Educar, entonces, es responder artesanalmente al llamado de los Otros.</blockquote>
+        <figcaption class="q-cite"><span class="q-pill">Tesis · p. 53</span></figcaption>
+      </figure>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="index.html" style="display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;background:#F5F7FA;color:#060B14;font-weight:600;font-size:16px" style-hover="color:#060B14;opacity:.9"><span aria-hidden="true">←</span> Volver a la hoja de vida</a>
+        <a href="res-cogitans.html" style="display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;border:1px solid rgba(245,247,250,.3);color:#F5F7FA;font-weight:500;font-size:16px" style-hover="background:rgba(245,247,250,.08);color:#F5F7FA">Conocer Res Cogitans <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:20px;border-top:1px solid rgba(143,184,255,.14);font-size:13px;color:#9FB0C8">
+    <span>© 2026 Andersson Albarracín Cortés · Bogotá</span>
+    <a href="#inicio" style="color:#9FB0C8" style-hover="color:#C9B5FF">Volver arriba ↑</a>
+  </footer>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  state = { mphase: 0, mprog: 0, cls: 0, cprog: 0, manual: false, gesto: -1 };
+
+  PHASE_MS = 5000;
+  CLASS_MS = 14000;
+  COLORS = ['#5C8CFF', '#A77BFF', '#3FBF8F'];
+
+  // Ventana emergente de los gestos: bloquea el scroll de fondo y se cierra con X, clic afuera o Escape.
+  setGesto(i) {
+    this.setState({ gesto: i });
+    try { document.body.style.overflow = i >= 0 ? 'hidden' : ''; } catch (e) {}
+  }
+
+  componentDidMount() {
+    this._onKey = (e) => { if (e.key === 'Escape' && this.state.gesto >= 0) this.setGesto(-1); };
+    window.addEventListener('keydown', this._onKey);
+    document.body.style.background = '#060B14';
+    const root = this.rootRef.current;
+    let reduced = false;
+    try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    this._reduced = reduced;
+    const nodes = root.querySelectorAll('[data-reveal]');
+    if (reduced || !('IntersectionObserver' in window)) { nodes.forEach(n => n.classList.add('in')); }
+    else {
+      this.io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); this.io.unobserve(e.target); } }), { threshold: 0.12 });
+      nodes.forEach(n => this.io.observe(n));
+    }
+    if (!reduced) this.timer = setInterval(() => this.tick(), 200);
+  }
+  componentWillUnmount() { window.removeEventListener('keydown', this._onKey); document.body.style.overflow = ''; clearInterval(this.timer); this.io && this.io.disconnect(); }
+
+  tick() {
+    this.setState(s => {
+      let { mphase, mprog, cls, cprog } = s;
+      mprog += 200 / this.PHASE_MS;
+      if (mprog >= 1) { mprog = 0; mphase = (mphase + 1) % 3; }
+      if (!s.manual) { cprog += 200 / this.CLASS_MS; if (cprog >= 1) { cprog = 0; cls = (cls + 1) % 4; } }
+      return { mphase, mprog, cls, cprog, t: performance.now() };
+    });
+  }
+
+  // Conceptos de las dos tesis que aparecen y desaparecen en la órbita.
+  ORBIT_WORDS = ['Compromiso', 'Otredad', 'Espera', 'Emociones', 'Silencio plural', 'Conflictos', 'Juego', 'Encuentro', 'Alteridad', 'Diálogo', 'Rostro', 'Transformación', 'Homo faber', 'Reconocimiento', 'Poiésis', 'Integralidad', 'Co-creación', 'Ciudadanía para la alteridad', 'Taller', 'La incógnita de los otros', 'Respuesta', 'Diferencia', 'Brújulas', 'Democracia', 'Hefesto', 'Paz', 'Artefacto', 'Razón práctica', 'Responder al Otro'];
+
+  renderVals() {
+    const { mphase, mprog, cls, cprog, manual } = this.state;
+    const C = this.COLORS;
+    const pal = ['#5C8CFF', '#A77BFF', '#3FBF8F', '#8FB8FF', '#C9B5FF', '#8FE3C0'];
+    const glows = ['rgba(92,140,255,.45)', 'rgba(167,123,255,.45)', 'rgba(63,191,143,.45)', 'rgba(143,184,255,.4)', 'rgba(201,181,255,.4)', 'rgba(143,227,192,.4)'];
+    const faces = Array.from({ length: 24 }, (_, i) => {
+      const k = (i * 7 + 3) % 6;
+      return { c: pal[k], g: glows[k], size: (62 + ((i * 37) % 38)) + '%', dur: (2.4 + (i % 5) * 0.5).toFixed(1) + 's', delay: (-(i * 0.37) % 3).toFixed(2) + 's' };
+    });
+    const names = ['Apertura', 'Construcción', 'Recuerdo'];
+    const pos = [['50%', '10%'], ['84.6%', '70%'], ['15.4%', '70%']];
+    const mnodes = names.map((nm, i) => ({
+      n: String(i + 1), label: nm, pressed: mphase === i, x: pos[i][0], y: pos[i][1], c: C[i],
+      bg: mphase === i ? C[i] : '#0D1B33', glow: mphase === i ? '0 0 26px ' + C[i] : 'none', s: mphase === i ? '1.12' : '1',
+      go: () => this.setState({ mphase: i, mprog: 0 })
+    }));
+    const mtabs = names.map((nm, i) => ({
+      name: nm, pressed: mphase === i, c: C[i], go: () => this.setState({ mphase: i, mprog: 0 }),
+      fill: mphase === i ? Math.round(mprog * 100) : (i < mphase ? 100 : 0),
+      bg: mphase === i ? 'rgba(143,184,255,.08)' : 'transparent', border: mphase === i ? C[i] : 'rgba(143,184,255,.14)', ink: mphase === i ? '#F5F7FA' : '#9FB0C8'
+    }));
+    const art = ['Mapa conceptual', 'Mapa mental', 'Afiche', 'Dibujo de alto impacto', 'Infografía', 'Línea del tiempo', 'Grafiti', 'Eslogan'];
+    const cdefs = [['Clase 1', 'Globalización e identidad', '#5C8CFF'], ['Clase 2', 'Yo tengo un sueño', '#A77BFF'], ['Clase 3 · A', 'Presentaciones Interactivas', '#3FBF8F'], ['Clase 3 · B', 'Desafíate', '#8FE3C0']];
+    const ctabs = cdefs.map((d, i) => ({
+      n: d[0], name: d[1], c: d[2], pressed: cls === i,
+      go: () => this.setState({ cls: i, cprog: 0, manual: true }),
+      fill: cls === i ? (manual ? 100 : Math.round(cprog * 100)) : 0,
+      bg: cls === i ? 'rgba(143,184,255,.08)' : 'transparent', border: cls === i ? d[2] : 'rgba(143,184,255,.14)', ink: cls === i ? '#F5F7FA' : '#9FB0C8'
+    }));
+    const inCols = ['#5C8CFF', '#A77BFF', '#E0A84F', '#5C8CFF', '#7F8FAA', '#A77BFF'];
+    const qdotsIn = Array.from({ length: 18 }, (_, i) => ({ c: inCols[(i * 5) % 6], d: (0.2 + i * 0.07).toFixed(2) + 's' }));
+    const qdotsOut = Array.from({ length: 18 }, (_, i) => ({ c: i % 7 === 3 ? '#A77BFF' : '#3FBF8F', d: (1.6 + i * 0.07).toFixed(2) + 's' }));
+    const marqueeBase = [
+      { t: 'Producir respuestas, no operar las establecidas', p: 'p. 40', c: '#5C8CFF' },
+      { t: 'Después del encuentro, no antes', p: 'p. 39', c: '#A77BFF' },
+      { t: 'Brújulas que nacen sobre el inmediato', p: 'p. 39', c: '#3FBF8F' },
+      { t: 'Crear las condiciones para que otros se expresen', p: 'p. 41', c: '#8FB8FF' },
+      { t: 'Estratega paciente y comprometido', p: 'p. 49', c: '#C9B5FF' }
+    ];
+    return {
+      rootRef: this.rootRef,
+      ...(() => {
+        const g = this.state.gesto, o = {};
+        const open = (i) => (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setGesto(i); };
+        for (let i = 0; i < 4; i++) {
+          o['g' + i] = g === i;
+          o['gOpen' + i] = open(i);
+          o['gShow' + i] = open(i);
+          o['gLabel' + i] = g === i ? 'Cerrar −' : 'Leer más +';
+          o['gBg' + i] = g === i ? 'rgba(143,184,255,.16)' : 'transparent';
+        }
+        o.gClose = () => this.setGesto(-1);
+        o.gAny = g >= 0;
+        o.gBackdrop = (e) => { if (e.target === e.currentTarget) this.setGesto(-1); };
+        return o;
+      })(),
+      orbitSlots: (() => {
+        const now = this.state.t || 0, W = this.ORBIT_WORDS, T = 7000, SHOW = 3400;
+        const cols = [['#5C8CFF', 'rgba(92,140,255,.45)'], ['#A77BFF', 'rgba(167,123,255,.45)'], ['#3FBF8F', 'rgba(63,191,143,.45)'], ['#8FB8FF', 'rgba(143,184,255,.4)'], ['#C9B5FF', 'rgba(201,181,255,.4)'], ['#8FE3C0', 'rgba(143,227,192,.4)']];
+        return Array.from({ length: 8 }, (_, k) => {
+          const off = k * 875, cyc = Math.floor((now + off) / T), tt = (now + off) % T;
+          const on = tt < SHOW;
+          const col = cols[(cyc + k) % cols.length];
+          return { a: (k * 45) + 'deg', w: W[(cyc * 8 + k) % W.length], c: col[0], g: col[1], op: on ? 1 : 0, sc: on ? '1' : '.8', f: on ? 'blur(0)' : 'blur(6px)' };
+        });
+      })(),
+      cells: Array.from({ length: 24 }, (_, i) => ({ i })),
+      faces,
+      mnodes, mtabs,
+      mColor: C[mphase], mName: names[mphase],
+      mDash: (754 * (1 - (mphase + mprog) / 3)).toFixed(1),
+      m0: mphase === 0, m1: mphase === 1, m2: mphase === 2,
+      artefacts: art.map((t, i) => ({ t, d: (0.15 + i * 0.07).toFixed(2) + 's' })),
+      ctabs,
+      c0: cls === 0, c1: cls === 1, c2: cls === 2, c3: cls === 3, isRC: cls >= 2,
+      qdotsIn, qdotsOut,
+      marquee: marqueeBase.concat(marqueeBase)
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js?v=20261120"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&amp;f[]=general-sans@400,500,600&amp;display=swap">
+<script src="./image-slot.js?v=20261120"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#060B14;-webkit-font-smoothing:antialiased}
+a{color:#8FB8FF;text-decoration:none}
+a:hover{color:#2F6BFF}
+::selection{background:#2F6BFF;color:#F5F7FA}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(63,191,143,.5)}50%{box-shadow:0 0 0 6px rgba(63,191,143,0)}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height:100vh;background:radial-gradient(1100px 700px at 90% 30%, rgba(47,107,255,.07), transparent 60%), radial-gradient(900px 600px at 10% 90%, rgba(143,184,255,.05), transparent 60%), var(--bg, #060B14);color:var(--ink, #F5F7FA);font-family:'General Sans', system-ui, sans-serif;font-size:16px;line-height:1.6;transition:background-color .4s, color .4s">
+
+<nav style="position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:var(--navBg, rgba(6,11,20,.72));border-bottom:1px solid var(--line, rgba(143,184,255,.14))">
+  <div style="max-width:1440px;margin:0 auto;padding:14px clamp(16px,3vw,40px);display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="#inicio" style="font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.01em;color:var(--ink, #F5F7FA);display:flex;align-items:center;gap:10px">
+      <span style="width:28px;height:28px;border-radius:999px;background:#2F6BFF;color:#F5F7FA;display:grid;place-items:center;font-size:13px">AA</span>
+      <span>Albarracin</span>
+    </a>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:28px;font-size:14px">
+        <a href="#sobre-mi" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Sobre mí</a>
+        <a href="#experiencia" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Experiencia</a>
+        <a href="#educacion" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Educación</a>
+        <a href="#publicaciones" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Publicaciones</a>
+        <a href="#contacto" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Contacto</a>
+      </div>
+    </sc-if>
+    <button onClick="{{ toggleTheme }}" aria-label="Cambiar modo de color" style="display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));background:transparent;color:var(--muted, #9FB0C8);font:500 13px 'General Sans', sans-serif;cursor:pointer;transition:border-color .3s, color .3s" style-hover="border-color:#2F6BFF;color:var(--ink, #F5F7FA)">
+      <span style="width:10px;height:10px;border-radius:999px;border:1.5px solid currentColor;background:linear-gradient(90deg, currentColor 50%, transparent 50%)"></span>
+      <span>{{ themeLabel }}</span>
+    </button>
+  </div>
+</nav>
+
+<div id="inicio" style="max-width:1440px;margin:0 auto;padding:clamp(16px,3vw,40px);display:flex;flex-wrap:wrap;align-items:flex-start;gap:clamp(28px,3.5vw,56px)">
+
+  <aside style="flex:1 1 300px;max-width:420px;position:{{ panelPos }};top:{{ panelTop }};display:flex;flex-direction:column;gap:22px">
+    <div style="position:relative;width:100%;aspect-ratio:4/5;border-radius:28px;overflow:hidden;background:var(--surface, #0D1B33);border:1px solid var(--line, rgba(143,184,255,.14))">
+      <image-slot id="foto-perfil" src="./retrato.jpg?v=20261120" alt="Andersson Albarracin Cortes" shape="rounded" radius="28" placeholder="Arrastra aquí tu foto"></image-slot>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:30px;line-height:1.05;letter-spacing:-0.02em;color:var(--ink, #F5F7FA)">Andersson Albarracin Cortes</div>
+      <div style="font-size:14px;color:var(--muted, #9FB0C8);text-wrap:pretty">Licenciado y Magíster en Filosofía y Justicia Social</div>
+      <div style="font-size:14px;color:var(--accentSoft, #8FB8FF)">Docente · Investigador · Desarrollador</div>
+    </div>
+    <sc-if value="{{ showAvailability }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted, #9FB0C8)">
+        <span style="width:8px;height:8px;border-radius:999px;background:#3FBF8F;animation:pulse 2.4s ease-in-out infinite"></span>
+        <span>Disponible para colegios, doctorado y becas</span>
+      </div>
+    </sc-if>
+    <div style="display:flex;flex-direction:column;border-top:1px solid var(--line, rgba(143,184,255,.14))">
+      <a href="tel:+573117420531" style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line, rgba(143,184,255,.14));color:var(--ink, #F5F7FA);font-size:14px" style-hover="color:#2F6BFF">
+        <span style="color:var(--muted, #9FB0C8)">Teléfono</span><span>311 742 0531</span>
+      </a>
+      <a href="mailto:andersson2392@gmail.com" style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line, rgba(143,184,255,.14));color:var(--ink, #F5F7FA);font-size:14px" style-hover="color:#2F6BFF">
+        <span style="color:var(--muted, #9FB0C8)">Correo</span><span style="overflow-wrap:anywhere;text-align:right">andersson2392@gmail.com</span>
+      </a>
+      <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line, rgba(143,184,255,.14));font-size:14px">
+        <span style="color:var(--muted, #9FB0C8)">Ciudad</span><span>Bogotá, Colombia</span>
+      </div>
+    </div>
+  </aside>
+
+  <main style="flex:999 1 520px;min-width:0;display:flex;flex-direction:column;gap:clamp(88px,10vw,140px);padding-bottom:80px">
+
+    <header data-reveal="" style="position:relative;overflow:hidden;border-radius:32px;min-height:clamp(540px,80vh,780px);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(24px,4vw,56px);color:#F5F7FA;background:radial-gradient(60% 55% at 18% 22%, rgba(47,107,255,.85) 0%, transparent 70%), radial-gradient(50% 60% at 85% 75%, rgba(143,184,255,.45) 0%, transparent 70%), radial-gradient(70% 50% at 70% 5%, rgba(13,27,51,1) 0%, transparent 80%), linear-gradient(160deg, #0D1B33 0%, #060B14 100%);border:1px solid rgba(143,184,255,.14)">
+      <div style="position:absolute;inset:-20%;background:radial-gradient(35% 30% at 55% 45%, rgba(47,107,255,.35), transparent 70%), radial-gradient(25% 25% at 30% 70%, rgba(143,184,255,.25), transparent 70%);filter:blur(40px);pointer-events:none"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(6,11,20,.92) 0%, rgba(6,11,20,.55) 45%, rgba(6,11,20,.15) 100%);pointer-events:none"></div>
+      <div style="position:relative;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#C9D8F2">
+        <span>Hoja de vida · 2026</span>
+        <span>Bogotá, Colombia</span>
+      </div>
+      <div style="position:relative;display:flex;flex-direction:column;gap:28px">
+        <h1 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(52px,8.4vw,136px);line-height:.88;letter-spacing:-0.035em;color:#F5F7FA">Andersson<br>Albarracin<br>Cortes</h1>
+        <div style="display:flex;flex-wrap:wrap;gap:10px 28px;font-size:clamp(15px,1.3vw,18px);color:#F5F7FA">
+          <span>Licenciado y Magíster en Filosofía y Justicia Social</span>
+          <span style="color:#8FB8FF">Docente · Investigador · Desarrollador</span>
+        </div>
+        <p style="margin:0;max-width:640px;font-size:clamp(16px,1.4vw,19px);line-height:1.55;color:#C9D8F2;text-wrap:pretty">“Comprometido en la construcción de respuestas a las necesidades contextuales y singulares de las aulas educativas, como artesano que responde a una demanda que requiere de tiempo, paciencia, disciplina y creatividad.”</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a href="#contacto" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:#F5F7FA;color:#060B14;font-weight:600;font-size:15px;transition:transform .3s, background .3s" style-hover="background:#FFFFFF;color:#060B14;transform:translateY(-2px)">Contactar</a>
+          <a href="#experiencia" style="display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;border:1px solid rgba(245,247,250,.35);color:#F5F7FA;font-weight:500;font-size:15px;transition:border-color .3s, background .3s" style-hover="border-color:#2F6BFF;background:rgba(47,107,255,.18);color:#F5F7FA">Ver experiencia <span>↗</span></a>
+        </div>
+      </div>
+    </header>
+
+    <section id="sobre-mi" data-reveal="" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.2em;text-transform:uppercase">
+        <span style="color:#2F6BFF;font-weight:600">01</span><span style="color:var(--muted, #9FB0C8)">/</span><span style="color:var(--accentSoft, #8FB8FF)">Sobre mí</span>
+        <span style="flex:1;height:1px;background:var(--line, rgba(143,184,255,.14))"></span>
+      </div>
+      <p style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:500;font-size:clamp(26px,2.8vw,42px);line-height:1.2;letter-spacing:-0.015em;color:var(--ink, #F5F7FA);text-wrap:pretty">Docente creativo, crítico e innovador. Con experiencia como docente de primaria y bachillerato, además de experiencia en investigación en ciencias sociales y temas educativos. Utilizo gran cantidad de herramientas educativas digitales y didácticas contemporáneas.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line, rgba(143,184,255,.14));border:1px solid var(--line, rgba(143,184,255,.14));border-radius:24px;overflow:hidden">
+        <sc-for list="{{ facts }}" as="f" hint-placeholder-count="3">
+          <div style="background:var(--bg, #060B14);padding:24px;display:flex;flex-direction:column;gap:6px">
+            <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:32px;line-height:1;color:var(--ink, #F5F7FA)">{{ f.value }}</span>
+            <span style="font-size:14px;color:var(--muted, #9FB0C8)">{{ f.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="experiencia" data-reveal="" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.2em;text-transform:uppercase">
+        <span style="color:#2F6BFF;font-weight:600">02</span><span style="color:var(--muted, #9FB0C8)">/</span><span style="color:var(--accentSoft, #8FB8FF)">Experiencia</span>
+        <span style="flex:1;height:1px;background:var(--line, rgba(143,184,255,.14))"></span>
+      </div>
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(40px,5vw,72px);line-height:.95;letter-spacing:-0.03em">Aula e investigación</h2>
+      <div style="position:relative;display:flex;flex-direction:column;padding-left:28px">
+        <span style="position:absolute;left:5px;top:10px;bottom:10px;width:1px;background:linear-gradient(to bottom, #2F6BFF, var(--line, rgba(143,184,255,.14)))"></span>
+        <sc-for list="{{ experience }}" as="e" hint-placeholder-count="4">
+          <article data-reveal="" style="position:relative;display:flex;flex-wrap:wrap;gap:8px 32px;padding:28px 0;border-bottom:1px solid var(--line, rgba(143,184,255,.14))">
+            <span style="position:absolute;left:-28px;top:36px;width:11px;height:11px;border-radius:999px;background:var(--bg, #060B14);border:2px solid #2F6BFF"></span>
+            <div style="flex:0 0 160px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF);padding-top:6px">{{ e.period }}</div>
+            <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:10px">
+              <div>
+                <h3 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:26px;line-height:1.15;letter-spacing:-0.01em">{{ e.role }}</h3>
+                <div style="font-size:15px;color:var(--muted, #9FB0C8)">{{ e.org }}</div>
+              </div>
+              <p style="margin:0;color:var(--muted, #9FB0C8);text-wrap:pretty">{{ e.text }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ e.tags }}" as="t" hint-placeholder-count="0">
+                  <span style="font-size:12px;padding:4px 12px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));color:var(--ink, #F5F7FA)">{{ t }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="educacion" data-reveal="" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.2em;text-transform:uppercase">
+        <span style="color:#2F6BFF;font-weight:600">03</span><span style="color:var(--muted, #9FB0C8)">/</span><span style="color:var(--accentSoft, #8FB8FF)">Educación</span>
+        <span style="flex:1;height:1px;background:var(--line, rgba(143,184,255,.14))"></span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+        <sc-for list="{{ education }}" as="d" hint-placeholder-count="2">
+          <article data-reveal="" style="display:flex;flex-direction:column;gap:18px;padding:32px;border-radius:28px;background:var(--surface, #0D1B33);border:1px solid var(--line, rgba(143,184,255,.14));transition:border-color .4s, transform .4s" style-hover="border-color:#2F6BFF;transform:translateY(-3px)">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+              <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:44px;line-height:1;color:#2F6BFF">{{ d.year }}</span>
+              <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)">{{ d.badge }}</span>
+            </div>
+            <div>
+              <h3 style="margin:0 0 4px;font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:24px;line-height:1.2">{{ d.degree }}</h3>
+              <div style="color:var(--muted, #9FB0C8)">{{ d.school }}</div>
+            </div>
+            <p style="margin:0;padding-top:16px;border-top:1px solid var(--line, rgba(143,184,255,.14));font-size:14px;color:var(--muted, #9FB0C8);text-wrap:pretty">{{ d.note }}</p>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="proyectos" data-reveal="" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.2em;text-transform:uppercase">
+        <span style="color:#2F6BFF;font-weight:600">04</span><span style="color:var(--muted, #9FB0C8)">/</span><span style="color:var(--accentSoft, #8FB8FF)">Logros y proyectos</span>
+        <span style="flex:1;height:1px;background:var(--line, rgba(143,184,255,.14))"></span>
+      </div>
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(40px,5vw,72px);line-height:.95;letter-spacing:-0.03em">El aula como taller</h2>
+      <div style="display:flex;flex-direction:column;border-top:1px solid var(--line, rgba(143,184,255,.14))">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="3">
+          <article data-reveal="" style="display:flex;flex-wrap:wrap;gap:8px 32px;padding:28px 0;border-bottom:1px solid var(--line, rgba(143,184,255,.14))">
+            <div style="flex:0 0 160px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF);padding-top:6px">{{ p.label }}</div>
+            <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:8px">
+              <h3 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:24px;line-height:1.2">{{ p.title }}</h3>
+              <p style="margin:0;color:var(--muted, #9FB0C8);text-wrap:pretty">{{ p.text }}</p>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+      <div data-reveal="" style="position:relative;overflow:hidden;display:flex;flex-direction:column;gap:20px;padding:clamp(28px,3.5vw,44px);border-radius:28px;background:radial-gradient(80% 120% at 100% 0%, rgba(47,107,255,.35), transparent 60%), var(--surface, #0D1B33);border:1px solid var(--line, rgba(143,184,255,.14))">
+        <span style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)">Software educativo</span>
+        <h3 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(34px,4vw,56px);line-height:1;letter-spacing:-0.02em">Res Cogitans</h3>
+        <p style="margin:0;max-width:560px;color:var(--muted, #9FB0C8);text-wrap:pretty">Plataformas educativas, totalmente funcionales, que facilitan el arte de enseñar y motivan el despertar de la conciencia. También organizan material, galerías y recursos de clase.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span style="padding:8px 16px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));font-size:14px">Presentaciones Interactivas</span>
+          <span style="padding:8px 16px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));font-size:14px">Desafíate</span>
+          <span style="padding:8px 16px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));font-size:14px">Agenda Docente</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="metodologia" data-reveal="" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.2em;text-transform:uppercase">
+        <span style="color:#2F6BFF;font-weight:600">05</span><span style="color:var(--muted, #9FB0C8)">/</span><span style="color:var(--accentSoft, #8FB8FF)">Metodología</span>
+        <span style="flex:1;height:1px;background:var(--line, rgba(143,184,255,.14))"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:32px 48px;align-items:flex-start">
+        <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:16px">
+          <div style="font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(72px,9vw,128px);line-height:.85;letter-spacing:-0.04em;color:#2F6BFF">80%</div>
+          <p style="margin:0;font-size:18px;color:var(--ink, #F5F7FA);text-wrap:pretty">práctico. Cada clase tiene inicio, desarrollo y cierre; en lo expositivo, preguntas abiertas, pausas activas y artefactos de aprendizaje.</p>
+        </div>
+        <div style="flex:1.4 1 340px;display:flex;flex-direction:column;gap:24px">
+          <p style="margin:0;color:var(--muted, #9FB0C8);text-wrap:pretty">Multimetodológico: se adapta a cualquier metodología institucional, porque dedica tiempo de investigación a mejorar sus prácticas.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ approaches }}" as="a" hint-placeholder-count="6">
+              <span style="padding:8px 16px;border-radius:999px;background:var(--chipBg, rgba(47,107,255,.10));color:var(--ink, #F5F7FA);font-size:14px">{{ a }}</span>
+            </sc-for>
+          </div>
+          <p style="margin:0;padding-top:20px;border-top:1px solid var(--line, rgba(143,184,255,.14));color:var(--muted, #9FB0C8);text-wrap:pretty">Literatura y poesía como mediación de los fenómenos sociales: Pablo Neruda, Mario Benedetti, Eduardo Galeano, Mario Mendoza y Dan Brown, entre otros. <em style="color:var(--ink, #F5F7FA)">El libro de los abrazos</em> y <em style="color:var(--ink, #F5F7FA)">Memorias del fuego</em> condensan procesos históricos en viñetas narrativas.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="publicaciones" data-reveal="" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.2em;text-transform:uppercase">
+        <span style="color:#2F6BFF;font-weight:600">06</span><span style="color:var(--muted, #9FB0C8)">/</span><span style="color:var(--accentSoft, #8FB8FF)">Publicaciones</span>
+        <span style="flex:1;height:1px;background:var(--line, rgba(143,184,255,.14))"></span>
+      </div>
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(40px,5vw,72px);line-height:.95;letter-spacing:-0.03em">Investigación</h2>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <sc-for list="{{ publications }}" as="pub" hint-placeholder-count="2">
+          <article data-reveal="" style="display:flex;flex-direction:column;gap:16px;padding:28px 32px;border-radius:24px;border:1px solid var(--line, rgba(143,184,255,.14));transition:border-color .4s, background .4s" style-hover="border-color:#2F6BFF;background:var(--chipBg, rgba(47,107,255,.10))">
+            <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase">
+              <span style="color:#2F6BFF;font-weight:600">{{ pub.year }}</span>
+              <span style="color:var(--accentSoft, #8FB8FF)">{{ pub.kind }}</span>
+            </div>
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:500;font-size:clamp(20px,1.8vw,26px);line-height:1.3;text-wrap:pretty">“{{ pub.title }}”</h3>
+          </article>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;padding-top:8px">
+        <p style="margin:0;flex:1 1 300px;color:var(--muted, #9FB0C8);font-size:15px">En curso: artículo de investigación en redacción. Proyección: doctorado en Ciencias Sociales o Filosofía.</p>
+        <a href="https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001862300" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:12px 22px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));color:var(--ink, #F5F7FA);font-size:14px;font-weight:500;transition:border-color .3s" style-hover="border-color:#2F6BFF;color:var(--ink, #F5F7FA)">CvLAC · Minciencias <span style="color:#2F6BFF">↗</span></a>
+      </div>
+    </section>
+
+    <section id="habilidades" data-reveal="" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.2em;text-transform:uppercase">
+        <span style="color:#2F6BFF;font-weight:600">07</span><span style="color:var(--muted, #9FB0C8)">/</span><span style="color:var(--accentSoft, #8FB8FF)">Habilidades</span>
+        <span style="flex:1;height:1px;background:var(--line, rgba(143,184,255,.14))"></span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ skills }}" as="s" hint-placeholder-count="6">
+          <span style="padding:12px 22px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));font-family:'Cabinet Grotesk', sans-serif;font-weight:500;font-size:clamp(17px,1.5vw,21px);color:var(--ink, #F5F7FA);transition:border-color .3s, color .3s" style-hover="border-color:#2F6BFF;color:#2F6BFF">{{ s }}</span>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:16px">
+        <sc-for list="{{ languages }}" as="l" hint-placeholder-count="2">
+          <div style="flex:1 1 220px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:20px 24px;border-radius:20px;background:var(--surface, #0D1B33);border:1px solid var(--line, rgba(143,184,255,.14))">
+            <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:22px">{{ l.name }}</span>
+            <span style="font-size:14px;color:var(--muted, #9FB0C8)">{{ l.level }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="contacto" data-reveal="" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:center;gap:16px;font-size:12px;letter-spacing:.2em;text-transform:uppercase">
+        <span style="color:#2F6BFF;font-weight:600">08</span><span style="color:var(--muted, #9FB0C8)">/</span><span style="color:var(--accentSoft, #8FB8FF)">Contacto</span>
+        <span style="flex:1;height:1px;background:var(--line, rgba(143,184,255,.14))"></span>
+      </div>
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(44px,6vw,92px);line-height:.92;letter-spacing:-0.035em;text-wrap:balance">Conversemos sobre el aula.</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="mailto:andersson2392@gmail.com" style="display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;background:var(--btnBg, #F5F7FA);color:var(--btnInk, #060B14);font-weight:600;font-size:16px;transition:transform .3s" style-hover="transform:translateY(-2px);color:var(--btnInk, #060B14)">andersson2392@gmail.com <span>↗</span></a>
+        <a href="tel:+573117420531" style="display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));color:var(--ink, #F5F7FA);font-weight:500;font-size:16px;transition:border-color .3s" style-hover="border-color:#2F6BFF;color:var(--ink, #F5F7FA)">311 742 0531 <span style="color:#2F6BFF">↗</span></a>
+        <span style="display:inline-flex;align-items:center;padding:16px 28px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));color:var(--muted, #9FB0C8);font-size:16px">Bogotá</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;padding-top:24px">
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:baseline">
+          <h3 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:24px">Referencias</h3>
+          <span style="font-size:14px;color:var(--muted, #9FB0C8)">Datos de contacto disponibles bajo solicitud</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1px;background:var(--line, rgba(143,184,255,.14));border:1px solid var(--line, rgba(143,184,255,.14));border-radius:24px;overflow:hidden">
+          <sc-for list="{{ references }}" as="r" hint-placeholder-count="4">
+            <div style="background:var(--bg, #060B14);padding:24px;display:flex;flex-direction:column;gap:4px">
+              <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:19px;color:var(--ink, #F5F7FA)">{{ r.name }}</span>
+              <span style="font-size:14px;color:var(--muted, #9FB0C8)">{{ r.role }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <footer style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:24px;border-top:1px solid var(--line, rgba(143,184,255,.14));font-size:13px;color:var(--muted, #9FB0C8)">
+      <span>© 2026 Andersson Albarracin Cortes</span>
+      <a href="#inicio" style="color:var(--muted, #9FB0C8)" style-hover="color:#2F6BFF">Volver arriba ↑</a>
+    </footer>
+  </main>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;showAvailability&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  state = { theme: (() => { try { return localStorage.getItem('aac-theme'); } catch (e) { return null; } })() || this.props.defaultTheme || 'dark', wide: true };
+
+  themes = {
+    dark: { bg:'#060B14', surface:'#0D1B33', ink:'#F5F7FA', muted:'#9FB0C8', line:'rgba(143,184,255,.14)', accentSoft:'#8FB8FF', btnBg:'#F5F7FA', btnInk:'#060B14', navBg:'rgba(6,11,20,.72)', chipBg:'rgba(47,107,255,.10)' },
+    light: { bg:'#F5F8FF', surface:'#FFFFFF', ink:'#060B14', muted:'#45577A', line:'rgba(13,27,51,.12)', accentSoft:'#1F4FCC', btnBg:'#060B14', btnInk:'#F5F7FA', navBg:'rgba(245,248,255,.82)', chipBg:'rgba(47,107,255,.08)' }
+  };
+
+  applyTheme() {
+    const el = this.rootRef.current; if (!el) return;
+    const t = this.themes[this.state.theme];
+    Object.entries(t).forEach(([k, v]) => el.style.setProperty('--' + k, v));
+    document.body.style.background = t.bg;
+  }
+
+  componentDidMount() {
+    this.applyTheme();
+    const el = this.rootRef.current;
+    const measure = () => { const w = window.innerWidth >= 960; if (w !== this.state.wide) this.setState({ wide: w }); };
+    measure(); window.addEventListener('resize', measure); this._measure = measure;
+    this.io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = 1; e.target.style.transform = 'none'; this.io.unobserve(e.target); }
+    }), { threshold: 0.08 });
+    el.querySelectorAll('[data-reveal]').forEach(n => {
+      n.style.opacity = 0; n.style.transform = 'translateY(18px)';
+      n.style.transition = (n.style.transition ? n.style.transition + ', ' : '') + 'opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1)';
+      this.io.observe(n);
+    });
+  }
+  componentDidUpdate() { this.applyTheme(); }
+  componentWillUnmount() { window.removeEventListener('resize', this._measure); this.io && this.io.disconnect(); }
+
+  renderVals() {
+    const dark = this.state.theme === 'dark';
+    return {
+      rootRef: this.rootRef,
+      wide: this.state.wide,
+      panelPos: this.state.wide ? 'sticky' : 'relative',
+      panelTop: this.state.wide ? '96px' : 'auto',
+      themeLabel: dark ? 'Modo claro' : 'Modo oscuro',
+      toggleTheme: () => this.setState(s => { const theme = s.theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('aac-theme', theme); } catch (e) {} return { theme }; }),
+      showAvailability: this.props.showAvailability ?? true,
+      facts: [
+        { value: '4 a. 8 m.', label: 'Docente de Ciencias Sociales' },
+        { value: '1 año', label: 'Docente de Filosofía' },
+        { value: '4° – 11°', label: 'Grados en los que ha enseñado' }
+      ],
+      experience: [
+        { period: 'Abr 2023 — Hoy', role: 'Docente de planta', org: 'Liceo Moderno Walt Whitman · Colegio privado, Bogotá',
+          text: 'Dirección de grupo, ejecución de clase y realización de proyectos transversales, como ferias e innovaciones educativas. En grados 4° a 6°: Historia, Geografía, Religión y Ética, Cátedra de Paz y Cátedra Socioemocional. En grados superiores: Filosofía, Ciencias Políticas, Economía, Competencias Ciudadanas, Ética y Ciencias Sociales.',
+          tags: ['Ciencias Sociales', 'Filosofía', 'Dirección de grupo'] },
+        { period: '2024', role: 'Asistente de investigación', org: 'Asesoría independiente',
+          text: 'Acompañamiento a expertos educativos en la finalización de proyectos investigativos. Uso de Atlas.ti, creación de base de datos de artículos científicos y ejecución de actividades transversales a la investigación.',
+          tags: ['Atlas.ti', 'Bases de datos'] },
+        { period: '2022', role: 'Docente de Ciencias Sociales', org: 'Colegio Restrepo Millán I.E.D. · Colegio público',
+          text: 'Práctica profesional certificada con ejercicio docente en grados 6°, 7° y 9°: planear, aplicar y estructurar proyectos transversales y clases disciplinares.',
+          tags: ['Práctica certificada'] },
+        { period: '2022', role: 'Asistente de investigación', org: 'Universidad Antonio Nariño',
+          text: 'Investigador Junior por dos semestres, con contrato. Análisis de datos masivos, creación de artículos para publicación, realización de entrevistas y uso de herramientas digitales de datos masivos.',
+          tags: ['Investigador Junior', 'Datos masivos'] }
+      ],
+      education: [
+        { year: '2026', badge: 'Promedio 4.9 / 5.0', degree: 'Magíster en Filosofía y Justicia Social', school: 'Universidad de La Salle',
+          note: 'Tesis: “El aula como taller y respuesta artesanal: hacia una ética docente desde la alteridad”.' },
+        { year: '2023', badge: 'Cum Laude', degree: 'Licenciado en Ciencias Sociales', school: 'Universidad Antonio Nariño',
+          note: 'Graduado Cum Laude.' }
+      ],
+      projects: [
+        { label: 'Emprender 2024', title: 'Bogotá y sus fuentes hídricas: soluciones a un problema que nos convoca a todos',
+          text: 'Proyecto interdisciplinario con modelado 3D, realidad aumentada, cartografía y cartografía social, expuesto por estudiantes de 4° a 9°. Primera inclusión de teléfonos móviles y realidad aumentada en la feria.' },
+        { label: 'Muestra Artística 2026', title: 'La magia de Encanto',
+          text: 'Lideró al grado once en práctica, corrección, motivación e inclusión de ideas. Participó también en el baile docente.' },
+        { label: 'Innovación', title: 'Poesía, literatura y soluciones digitales',
+          text: 'Respuestas a la falta de atención y la pereza escolar desde la literatura en ciencias sociales y filosofía. Además: Semana de la Ciencia, adaptación curricular y materiales propios de aprendizaje.' }
+      ],
+      approaches: ['Debates', 'Proyectos de aula', 'Aprendizaje basado en preguntas', 'Arte ante problemáticas complejas', 'Trabajo en grupos con acuerdos', 'Investigaciones de los estudiantes'],
+      publications: [
+        { year: '2021', kind: 'Ponencia internacional', title: 'Territorios Interculturales: Experiencia de la proyección social y comunitaria en estudiantes indígenas de la Facultad de Educación de la Universidad Antonio Nariño' },
+        { year: '2021', kind: 'Ponencia nacional', title: 'Desafíos de la educación postpandemia. Aprendizajes obtenidos con la educación remota y asistida por tecnologías' }
+      ],
+      skills: ['Investigador', 'Innovador', 'Ejecutor de proyectos', 'Gestión del tiempo', 'Trabajo en equipo', 'Pensamiento estratégico'],
+      languages: [ { name: 'Español', level: 'Nativo' }, { name: 'Inglés', level: 'B1 · en proceso de bilingüismo' } ],
+      references: [
+        { name: 'Rodulfo Castiblanco', role: 'Docente Universitario' },
+        { name: 'Luz Miryam', role: 'Coordinadora · Colegio Walt Whitman' },
+        { name: 'Yuri Ríos', role: 'Coordinadora · Colegio Walt Whitman' },
+        { name: 'Andrea Marcela Maecha', role: 'Docente Universitaria' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
