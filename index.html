@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js?v=20261120"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&amp;f[]=general-sans@400,500,600&amp;display=swap">
+<script src="./image-slot.js?v=20261120"></script>
+<script src="./rc-loader.js?v=20261120"></script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#060B14;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:#8FB8FF;text-decoration:none}
+a:hover{color:#2F6BFF}
+::selection{background:#2F6BFF;color:#F5F7FA}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(63,191,143,.55)}50%{box-shadow:0 0 0 6px rgba(63,191,143,0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+@keyframes ripple{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.1);opacity:0}}
+@keyframes dotpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
+.rcwin .rcl__stage{width:min(var(--rcl-width,360px),86%)}
+.rcwin .rcl__phrase{width:min(30em,100%);font-size:clamp(15px,1.9vw,19px);line-height:1.4}
+.rcwin .rcl__credit{font-size:clamp(14px,1.6vw,18px);padding:4px 24px}
+.rcwin .rcl__foot,.rcwin .rcl__phrase,.rcwin .rcl__credit,.rcwin .rcl__corner .n,.rcwin .rcl__corner .fig{display:none}
+.rcwin .rcl{--rcl-pad-b:120px}
+.rc-words .w{opacity:0;transform:translateY(8px);filter:blur(3px);transition:opacity .8s ease,transform .9s cubic-bezier(.2,.7,.2,1),filter .8s ease;transition-delay:calc(var(--d) * 200ms)}
+.rcwrap.rc-drawn .rc-words .w{opacity:1;transform:none;filter:none}
+.rcwin.rc-rest .rcl__logo{animation:rcGlow 3.2s ease-in-out infinite}
+@keyframes rcGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(143,184,255,0))}50%{filter:drop-shadow(0 0 14px rgba(143,184,255,.85)) drop-shadow(0 0 32px rgba(47,107,255,.6))}}
+@keyframes ctaShine{0%{transform:translateX(-120%)}55%,100%{transform:translateX(280%)}}
+@keyframes lineDraw{0%{transform:scaleX(0);opacity:1}55%{transform:scaleX(1);opacity:1}85%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+@keyframes lineTip{0%{left:0%;opacity:1}55%{left:100%;opacity:1}85%{left:100%;opacity:1}100%{left:100%;opacity:0}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-4%,3%) scale(1.08)}}
+/* Solo celular: ordena los elementos para pantallas pequeñas sin tocar la versión de computador */
+@media (max-width: 760px){
+  .m-nav{width:auto !important;max-width:calc(100vw - 32px) !important}
+  .m-navlabel{display:block;max-width:52vw;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+  .m-fluid{width:auto !important;height:auto !important;max-width:100% !important}
+  .m-facts{width:100% !important;left:0 !important;margin-top:0 !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  .m-facts > div{padding:26px 12px !important}
+  .m-facts [style*="white-space:nowrap"]{font-size:38px !important;white-space:normal !important}
+  .m-enfoque{margin-top:0 !important}
+  .m-line{width:auto !important;left:0 !important}
+  .m-contact-h{font-size:clamp(40px,12vw,56px) !important}
+  .m-photo{min-height:auto !important;display:flex;flex-direction:column;padding-top:76px}
+  .m-photo > img{position:relative !important;inset:auto !important;height:112vw !important;max-height:560px}
+  .m-photo > div:not(.m-tesis){top:76px !important}
+  .m-tesis{position:relative !important;right:auto !important;bottom:auto !important;width:auto !important;margin:-48px 16px 0}
+  .m-herotext{padding-top:36px !important;gap:24px !important}
+}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height:100vh;background:var(--bg, #060B14);color:var(--ink, #F5F7FA);font-family:'General Sans', system-ui, sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;transition:background-color .5s, color .5s">
+
+<nav style="position:fixed;top:16px;left:0;right:0;z-index:30;display:flex;justify-content:center;padding:0 16px;pointer-events:none">
+  <div class="m-nav" onMouseEnter="{{ openNav }}" onMouseLeave="{{ closeNav }}" style="pointer-events: auto; width: 428px; max-width: {{ navMax }}; transition: max-width .6s cubic-bezier(.3,1.2,.4,1), box-shadow .4s; box-shadow: {{ navShadow }}; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 8px 8px 20px; border-radius: 999px; background: var(--navBg, rgba(13,27,51,.55)); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); border: 1px solid var(--line, rgba(143,184,255,.14)); height: 47px">
+    <a href="#inicio" style="display: flex; align-items: baseline; gap: 6px; color: var(--ink, #F5F7FA); font-family: 'Cabinet Grotesk', sans-serif; font-size: 16px; white-space: nowrap">
+      <strong class="m-navlabel" style="font-weight:800;letter-spacing:-0.01em">Docente de Ciencias Sociales y Filosofía&nbsp;</strong>
+    </a>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:26px;font-size:14px;white-space:nowrap;overflow:hidden;max-width:{{ linksMax }};opacity:{{ linksOpacity }};transition:max-width .6s cubic-bezier(.3,1.2,.4,1), opacity .35s">
+        <a href="#sobre-mi" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Sobre mí</a>
+        <a href="#experiencia" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Experiencia</a>
+        <a href="#educacion" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Educación</a>
+        <a href="#publicaciones" style="color:var(--muted, #9FB0C8)" style-hover="color:var(--ink, #F5F7FA)">Publicaciones</a>
+      </div>
+    </sc-if>
+    <div style="display:flex;align-items:center;gap:6px">
+      <div style="display:flex;overflow:hidden;max-width:{{ toggleMax }};opacity:{{ linksOpacity }};transition:max-width .6s cubic-bezier(.3,1.2,.4,1), opacity .35s">
+      <button onClick="{{ toggleTheme }}" aria-label="Cambiar modo de color" title="Cambiar modo" style="width:38px;height:38px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));background:transparent;color:var(--ink, #F5F7FA);display:grid;place-items:center;cursor:pointer;flex-shrink:0;transition:border-color .3s" style-hover="border-color:#2F6BFF">
+        <span style="width:12px;height:12px;border-radius:999px;border:1.5px solid currentColor;background:linear-gradient(90deg, currentColor 50%, transparent 50%)"></span>
+      </button>
+      </div>
+      <a href="#contacto" style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;background:var(--btnBg, #F5F7FA);color:var(--btnInk, #060B14);font-weight:600;font-size:14px;white-space:nowrap" style-hover="color:var(--btnInk, #060B14);opacity:.88">Contactar <span>↗</span></a>
+    </div>
+  </div>
+</nav>
+
+<header id="inicio" style="position:relative;min-height:100vh;overflow:hidden;display:flex;flex-wrap:wrap;align-items:stretch">
+  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(55% 60% at 30% 40%, rgba(47,107,255,.42), transparent 70%), radial-gradient(40% 45% at 15% 85%, rgba(143,184,255,.16), transparent 70%), radial-gradient(60% 50% at 95% 100%, rgba(13,27,51,.9), transparent 70%)"></div>
+  <div style="position:absolute;inset:-10%;pointer-events:none;background:radial-gradient(30% 30% at 60% 30%, rgba(47,107,255,.35), transparent 70%), radial-gradient(22% 25% at 85% 70%, rgba(143,184,255,.22), transparent 70%);filter:blur(50px);animation:drift 18s ease-in-out infinite"></div>
+
+  <div class="m-photo" style="position:relative;z-index:1;flex:1 1 340px;min-height:min(80vw,520px)">
+    <img src="./retrato.jpg?v=20261120" alt="Retrato de Andersson Albarracin Cortes" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%;filter:saturate(.9) contrast(1.05);-webkit-mask-image:radial-gradient(ellipse 72% 78% at 48% 38%, #000 48%, transparent 100%);mask-image:radial-gradient(ellipse 72% 78% at 48% 38%, #000 48%, transparent 100%)">
+    <div style="position:absolute;inset:0;background:linear-gradient(200deg, rgba(47,107,255,.55), rgba(6,11,20,.2) 60%);mix-blend-mode:soft-light;pointer-events:none"></div>
+    <div class="m-tesis" style="position:absolute;right:clamp(16px,3vw,40px);bottom:clamp(16px,4vw,48px);width:min(320px, calc(100% - 32px));display:flex;flex-direction:column;gap:14px;padding:18px 20px;border-radius:22px;background:rgba(6,11,20,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(143,184,255,.2);color:#F5F7FA">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#8FB8FF;font-size:11px;letter-spacing:.18em;text-transform:uppercase">Tesis escritas</span>
+        <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:13px;color:#2F6BFF">02</span>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <a style="display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(143,184,255,.16); color: #8FB8FF; text-decoration: none; transition: color .2s" style-hover="color:#2F6BFF" href="https://drive.google.com/file/d/1vCLP9dSc7Mu-ViRs4hcnMs82jfhXx66b/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <span style="font-size:11px;color:#8FB8FF;padding-top:3px">01</span>
+          <span style="font-size:14px;line-height:1.35;text-wrap:pretty">El aula como taller y respuesta artesanal</span>
+        </a>
+        <div style="display:flex;gap:12px;padding:10px 0 0;border-top:1px solid rgba(143,184,255,.16)">
+          <span style="font-size:11px;color:#8FB8FF;padding-top:3px">02</span>
+          <span style="font-size:14px;line-height:1.35;text-wrap:pretty"><a href="https://repositorio.uan.edu.co/items/68693f7f-4332-4f65-8006-590dcc993f25">Cartilla didáctica para la enseñanza de la tripartita alteridad, emociones y conflictos en el aula</a></span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="m-herotext" style="position:relative;z-index:2;flex:1.2 1 440px;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;gap:32px;padding:clamp(20px,4vw,72px);padding-top:clamp(40px,14vh,140px)">
+    <div data-reveal="" style="display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)">
+      <sc-if value="{{ showAvailability }}" hint-placeholder-val="{{ true }}">
+        <span style="width:7px;height:7px;border-radius:999px;background:#3FBF8F;animation:pulse 2.4s ease-in-out infinite"></span>
+      </sc-if>
+      <span>Docente · Investigador · Desarrollador</span>
+    </div>
+    <h1 data-reveal="" style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(56px,8vw,138px);line-height:.86;letter-spacing:-0.045em;text-wrap:balance">
+      <span style="display:block;color:var(--ink, #F5F7FA)">Andersson</span>
+      <span style="display:block;color:var(--ink, #F5F7FA)">Albarracin.</span>
+      <span style="display:block;margin-top:.12em;font-weight:500;font-size:.46em;line-height:1;letter-spacing:-0.03em;color:var(--accentSoft, #8FB8FF)">Enseñar como un artesano.</span>
+    </h1>
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:10px;max-width:520px;font-size:14px;line-height:1.4">
+      <div style="display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><span style="color:var(--ink, #F5F7FA);font-weight:500">Magíster en Filosofía y Justicia Social</span><span style="color:var(--muted, #9FB0C8)">Universidad de La Salle · 2026</span></div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><span style="color:var(--ink, #F5F7FA);font-weight:500">Licenciado en Ciencias Sociales</span><span style="color:var(--muted, #9FB0C8)">Universidad Antonio Nariño · 2023 · Cum Laude</span></div><span style="color: var(--ink, #F5F7FA); font-weight: 500;">EdTech Product Designer&nbsp; &nbsp;<span style="color: var(--muted, #9FB0C8);">Diseñador de Software Educativo. Fundador de Res Cogitans</span></span>
+    </div>
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:10px;max-width:520px;font-size:14px;line-height:1.4">
+      
+      <div style="display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"></div><div style="display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline"><span style="color:var(--ink, #F5F7FA);font-weight:500"><br></span></div>
+    </div><div data-reveal="" style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="#contacto" style="display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:999px;background:var(--btnBg, #F5F7FA);color:var(--btnInk, #060B14);font-weight:600;font-size:15px;transition:transform .3s" style-hover="transform:translateY(-2px);color:var(--btnInk, #060B14)">Contactar</a>
+      <a href="#experiencia" style="display:inline-flex;align-items:center;gap:10px;padding:15px 28px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));background:var(--glass, rgba(13,27,51,.35));backdrop-filter:blur(10px);color:var(--ink, #F5F7FA);font-weight:500;font-size:15px;transition:border-color .3s" style-hover="border-color:#2F6BFF;color:var(--ink, #F5F7FA)">Ver experiencia <span style="color:#2F6BFF">↗</span></a>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px 24px;padding-top:24px;border-top:1px solid var(--line, rgba(143,184,255,.14));font-size:13px;color:var(--muted, #9FB0C8)"><span>Bogotá, Colombia</span><span>Magíster 2026 · Alto Rendimiento</span><span>Grados 4° a 11°</span>
+    </div>
+  </div>
+
+</header>
+
+<main style="position: relative; max-width: 1259px; margin: 0 auto; padding: 0 clamp(16px,4vw,48px); display: flex; flex-direction: column; gap: clamp(100px,12vw,180px); padding-bottom: 40px">
+
+  <section id="sobre-mi" style="scroll-margin-top:110px;display:flex;flex-direction:column;gap:56px;padding-top:clamp(60px,8vw,120px)">
+    <div data-reveal="" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px">
+      <span style="font-size: 22px; letter-spacing: .22em; text-transform: uppercase; color: var(--accentSoft, #8FB8FF); height: 30 px"><b style="color:#2F6BFF;font-weight:600">01</b> / Sobre mí</span>
+      <p class="m-fluid" style="margin: 0; max-width: 1020px; font-family: 'Cabinet Grotesk', sans-serif; font-weight: 500; font-size: clamp(24px,3.6vw,44px); line-height: 1.1; letter-spacing: -0.025em; text-wrap: balance; color: var(--ink, #F5F7FA); width: 1000px; height: 317px">Docente Creativo, Crítico, Innovador y Desarrollador Artesanal Digital. <span style="color: var(--muted, #9FB0C8)"><br>Experiencia con: Primaria, Secundaria y Bachillerato e investigador en Ciencias Sociales. <br>Además, de Arquitecto de herramientas digitales y didácticas contemporáneas.</span></p>
+    </div>
+    
+  </section>
+
+  <div class="m-facts" data-reveal="" style="display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,220px),1fr)); border-top: 1px solid var(--line, rgba(143,184,255,.14)); border-bottom: 1px solid var(--line, rgba(143,184,255,.14)); border-right: 1px solid var(--line, rgba(143,184,255,.14)); width: 1279px; max-width: 100%; position: relative; left: 5px; margin-top: -135px">
+      <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+        <div style="padding:40px 24px;display:flex;flex-direction:column;justify-content:flex-start;border-left:1px solid var(--line, rgba(143,184,255,.14))">
+          <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px">
+            <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(48px,5vw,76px);line-height:.9;letter-spacing:-0.04em;color:var(--ink, #F5F7FA);white-space:nowrap">{{ f.value }}</span>
+            <span style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#2F6BFF;font-weight:600">{{ f.unit }}</span>
+            <span style="font-size: 15px; line-height: 1.4; color: var(--muted, #9FB0C8); max-width: 200px; text-wrap: balance; text-align: center">{{ f.label }}</span>
+          </div>
+          
+        </div>
+      </sc-for>
+    </div><section id="enfoque" class="m-enfoque" style="scroll-margin-top:110px;display:flex;flex-direction:column;gap:40px;margin-top:calc(-1 * clamp(50px,7vw,120px))">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:28px 56px">
+      <div style="flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px">
+        <span style="font-size: 18px; letter-spacing: .22em; text-transform: uppercase; color: var(--accentSoft, #8FB8FF); height: 36px; text-align: center"><b style="color: rgb(47, 107, 255); font-weight: 600">02</b> / Enfoque PEDAGÓGICO</span>
+        <h2 class="m-fluid" style="margin: 0; font-family: 'Cabinet Grotesk', sans-serif; font-weight: 800; font-size: clamp(44px,6vw,50px); line-height: 1.4; letter-spacing: -0.04em; text-align: center; width: 820px; height: 209px; position: relative; left: 11px">El aula como taller.<br>Enfoque y Metodología de enseñanza</h2><div class="m-line" aria-hidden="true" style="position: relative; height: 5px; border-radius: 2px; background: var(--line, rgba(143,184,255,.14)); margin: 4px 0; width: 810px; left: 20px">
+          <span style="position:absolute;inset:0;border-radius:2px;background:linear-gradient(90deg,#5C8CFF,#A77BFF,#3FBF8F);transform-origin:left;animation:lineDraw 4.5s cubic-bezier(.45,0,.2,1) infinite"></span>
+          <span style="position:absolute;top:-4px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#F5F7FA;box-shadow:0 0 12px #A77BFF, 0 0 24px #5C8CFF;animation:lineTip 4.5s cubic-bezier(.45,0,.2,1) infinite"></span>
+        </div>
+      </div>
+      <div style="flex:0 1 420px;display:flex;flex-direction:column;gap:14px;padding-bottom:6px">
+        <span style="font-size: 18px; letter-spacing: .22em; text-transform: uppercase; color: var(--accentSoft, #8FB8FF); text-align: center">FORTALEZA PROFESIONAL Y EPISTEMICA&nbsp;</span>
+        <p style="margin: 0; font-family: 'Cabinet Grotesk', sans-serif; font-weight: 700; font-size: clamp(19px,1.7vw,23px); line-height: 1.22; letter-spacing: -0.01em; color: var(--ink, #F5F7FA); text-wrap: pretty; text-align: right">Alta capacidad de adaptación <span style="background:linear-gradient(90deg,#5C8CFF,#A77BFF);-webkit-background-clip:text;background-clip:text;color:transparent">multimetodológica</span> a cualquier institución educativa y a cualquier tipo de pedagogía.</p>
+        <div aria-hidden="true" style="position: relative; height: 3px; border-radius: 2px; background: var(--line, rgba(143,184,255,.14)); margin: 4px 0">
+          <span style="position:absolute;inset:0;border-radius:2px;background:linear-gradient(90deg,#5C8CFF,#A77BFF,#3FBF8F);transform-origin:left;animation:lineDraw 4.5s cubic-bezier(.45,0,.2,1) infinite"></span>
+          <span style="position:absolute;top:-4px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#F5F7FA;box-shadow:0 0 12px #A77BFF, 0 0 24px #5C8CFF;animation:lineTip 4.5s cubic-bezier(.45,0,.2,1) infinite"></span>
+        </div>
+        <p style="margin: 0; color: var(--muted, #9FB0C8); font-size: 15px; line-height: 1.6; text-wrap: pretty; text-align: right">Aunque mi experticia es la docencia como artesano, poseo habilidades investigativas y una pasión por adaptarme a <span style="color: var(--ink, #F5F7FA)">nuevos retos, métodos, pedagógicas, perspectivas, misiones y visiones</span>.</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:16px">
+      <article data-reveal="" style="position:relative;overflow:hidden;flex:1.6 1 460px;min-height:380px;display:flex;flex-direction:column;justify-content:space-between;gap:24px;padding:clamp(28px,3vw,40px);border-radius:32px;background:radial-gradient(70% 90% at 100% 0%, rgba(47,107,255,.6), transparent 65%), radial-gradient(50% 60% at 0% 100%, rgba(143,184,255,.18), transparent 70%), #0D1B33;color:#F5F7FA;border:1px solid rgba(143,184,255,.18)">
+        <div style="display:flex;align-items:center;gap:14px">
+          <span aria-hidden="true" style="width:32px;height:1px;background:linear-gradient(90deg,transparent,#8FB8FF)"></span>
+          <span style="font-size: 23px; letter-spacing: .26em; text-transform: uppercase; color: #C9D8F2; font-weight: 500">Fundador de <b style="color:#F5F7FA;font-weight:700">Res Cogitans</b></span>
+        </div>
+        <div class="rcwrap" style="position:relative">
+          <div class="rcwin" ref="{{ rcRef }}" aria-hidden="true" style="position:relative;isolation:isolate;overflow:hidden;height:clamp(320px,50vw,400px);border-radius:24px;border:1px solid rgba(143,184,255,.4);background:#0F2347;box-shadow:0 0 0 4px rgba(47,107,255,.12), 0 24px 70px rgba(47,107,255,.32)"></div>
+          <div class="rc-words" style="position:absolute;left:1px;right:1px;bottom:1px;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:56px 16px clamp(16px,2.4vw,24px);border-radius:0 0 23px 23px;background:linear-gradient(180deg,rgba(7,16,31,0),rgba(7,16,31,.88) 60%);pointer-events:none">
+            <p style="margin:0;display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:2px 10px;font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:clamp(16px,1.9vw,21px);letter-spacing:.01em;color:#F5F7FA"><span class="w" style="--d: 0">Construye,</span>
+              <span class="w" style="--d: 1">Transforma,</span>
+              <span class="w" style="--d: 2">Innova</span>
+              <span class="w" style="--d: 3; font-weight: 500; font-style: italic; color: rgb(201, 216, 242)">y, sobre todo,</span>
+              <span class="w" style="--d: 4; color: rgb(143, 184, 255); font-weight: 800">Aplica</span>
+            </p>
+            <p class="w" style="--d:6;margin:0;font-family:'EB Garamond', Georgia, serif;font-style:italic;font-size:clamp(15px,1.7vw,19px);line-height:1.35;color:#C9D8F2;text-wrap:balance">Un taller digital para crear nuevas formas de enseñar y aprender.</p>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <p style="margin: 0; max-width: 613px; color: #C9D8F2; font-size: 17px; line-height: 1.6; text-wrap: pretty; text-align: justify; width: 715px; height: 114px">Es una marca educativa teórico-práctica que ha diseñado todo un conjunto de plataformas educativas que facilitan el arte de enseñar y aprender. Está dirigida a docentes artesanos e innovadores que aún creen que educar es parte de un proceso artístico, intelectual y artesanal.</p>
+          <a href="res-cogitans.html" style="align-self: center; margin-top: 8px; display: inline-flex; align-items: center; gap: 16px; padding: 6px 6px 6px 26px; border-radius: 999px; background: #F5F7FA; color: #0D1B33; font-weight: 600; font-size: 18px; letter-spacing: .01em; box-shadow: 0 10px 30px rgba(6,11,20,.35); transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s" style-hover="transform:translateY(-2px);color:#0D1B33;box-shadow:0 0 0 6px rgba(143,184,255,.18), 0 16px 40px rgba(47,107,255,.4)">
+            Conocer Res Cogitans
+            <span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 999px; background: #0D1B33; color: #F5F7FA; display: grid; place-items: center; font-size: 18px"><span style="display:block;animation:nudge 1.8s ease-in-out infinite">→</span></span>
+          </a>
+          <div style="display: none; flex-wrap: wrap; gap: 8px">
+            
+            
+            
+          </div>
+        </div>
+      </article>
+      <article data-reveal="" style="--pc:{{ pC }};--pcs:{{ pCs }};--pcore:{{ pCo }};flex:1 1 340px;min-height:380px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:clamp(28px,3vw,40px);border-radius:32px;background:radial-gradient(70% 60% at 50% 0%, {{ pCg }}, transparent 70%), radial-gradient(60% 50% at 100% 100%, rgba(124,77,255,.12), transparent 70%), var(--surface, #0D1B33);border:1px solid var(--line, rgba(143,184,255,.14));transition:background .8s">
+        <span style="font-size: 16px; letter-spacing: .18em; text-transform: uppercase; color: var(--accentSoft, #8FB8FF)">El aula como taller · <b style="font-weight:600;color:var(--pcs, #8FE3C0);transition:color .6s">Cómo enseño</b></span>
+        <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+          <div style="position:relative;width:172px;height:172px;flex:0 0 172px">
+            <svg viewBox="0 0 220 220" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+              <g style="transform-origin:110px 110px;animation:spin 40s linear infinite">
+                <circle cx="110" cy="110" r="104" style="fill:none;stroke:var(--pcs, #8FE3C0);stroke-width:1.5;stroke-dasharray:2 9;opacity:.6"></circle>
+                <circle cx="110" cy="6" r="5" style="fill:var(--pcs, #8FE3C0)"></circle>
+              </g>
+              <circle cx="110" cy="110" r="84" style="fill:none;stroke:var(--pc, #3FBF8F);opacity:.22;stroke-width:12"></circle>
+              <circle cx="110" cy="110" r="84" transform="rotate(-90 110 110)" style="fill:none;stroke:var(--pc, #3FBF8F);stroke-width:12;stroke-linecap:round;stroke-dasharray:527.8;stroke-dashoffset:{{ pDash }};transition:stroke-dashoffset 1.4s cubic-bezier(.3,1,.4,1)"></circle>
+              <circle cx="110" cy="110" r="52" style="fill:none;stroke:var(--pc, #3FBF8F);stroke-width:3;transform-box:fill-box;transform-origin:center;animation:ripple 3.2s ease-out infinite"></circle>
+              <circle cx="110" cy="110" r="52" style="fill:none;stroke:var(--pcs, #8FE3C0);stroke-width:3;transform-box:fill-box;transform-origin:center;animation:ripple 3.2s 1.6s ease-out infinite"></circle>
+              <circle cx="110" cy="110" r="52" style="fill:#0A1222"></circle>
+              <circle cx="110" cy="110" r="52" style="fill:var(--pcore, #1E7F5C);opacity:{{ pCore }};transform-box:fill-box;transform-origin:center;animation:breathe 3.2s ease-in-out infinite;transition:opacity 1.2s"></circle>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;pointer-events:none">
+              <span style="display:block;width:84px;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:{{ pWordSize }};line-height:1.05;letter-spacing:-0.01em;color:#F5F7FA;overflow-wrap:anywhere;text-shadow:0 1px 6px rgba(6,11,20,.6);animation:breathe 3.2s ease-in-out infinite">{{ pWord }}</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; justify-content: center; align-items: center; height: 88px; position: relative; flex: 1 1 160px; min-width: 0; text-align: center; font-size: 20px">
+            <span style="font-family: 'Cabinet Grotesk', sans-serif; font-weight: 800; font-size: clamp(100px,6vw,92px); line-height: .85; letter-spacing: -0.05em; color: var(--pc, #3FBF8F); transition: color .6s">80%</span>
+            <span style="font-size: 25px; color: #8fb8ff; font-family: Bebas Neue, sans-serif">De la clase es PRÁCTICA</span>
+          </div>
+        </div>
+        <p style="margin: 0; color: var(--muted, #9FB0C8); font-size: 18px; text-wrap: pretty; width: 154px; height: 25px; text-align: left; position: relative; left: -19px; top: 5px">Ejemplos de clase:</p><div style="display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; height: 34px">
+          <sc-for list="{{ pClasses }}" as="k" hint-placeholder-count="3">
+            <button onClick="{{ k.go }}" aria-pressed="{{ k.pressed }}" style="padding: 7px 14px; border-radius: 999px; border: 1px solid {{ k.border }}; background: {{ k.bg }}; color: {{ k.ink }}; font-size: 18px; font-weight: 600; cursor: pointer; transition: border-color .3s, background .3s; padding-top: 8px; opacity: 1; border-style: dashed">{{ k.name }}</button>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:6px">
+          <sc-for list="{{ pMoments }}" as="m" hint-placeholder-count="3">
+            <button onClick="{{ m.go }}" aria-pressed="{{ m.pressed }}" style="position:relative;overflow:hidden;padding:9px 6px 12px;border-radius:14px;border:1px solid {{ m.border }};background:{{ m.bg }};color:{{ m.ink }};font-size:13px;font-weight:600;cursor:pointer;transition:border-color .3s, background .3s">{{ m.name }}<span style="position:absolute;left:0;bottom:0;height:3px;width:{{ m.fill }}%;background:var(--pc, #3FBF8F);transition:width .2s linear"></span></button>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:grid;grid-template-columns:repeat(14, minmax(0, 1fr));gap:6px;justify-items:center">
+            <sc-for list="{{ pDots }}" as="d" hint-placeholder-count="28">
+              <span style="width:100%;max-width:16px;aspect-ratio:1;border-radius:999px;background:{{ d.bg }};box-shadow:{{ d.glow }};transition:background .6s {{ d.delay }}, box-shadow .6s {{ d.delay }};animation:{{ d.anim }}"></span>
+            </sc-for>
+          </div>
+          <p style="margin: 0; color: var(--muted, #9FB0C8); font-size: 14px; text-wrap: pretty; position: relative; left: 0px; top: 10px; text-align: center"><span style="display:block;margin-bottom:4px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--pcs, #8FE3C0)">{{ pCapTitle }}</span><span style="font-size:16px;line-height:1.5;color:var(--ink, #F5F7FA)">{{ pCaption }}</span></p>
+        </div>
+        <p style="margin: 0; padding-top: 16px; border-top: 1px solid var(--line, rgba(143,184,255,.14)); font-family: 'EB Garamond', Georgia, serif; font-style: italic; font-size: 20px; line-height: 1.3; color: var(--ink, #F5F7FA); text-align: center">«Producir respuestas, no operar las establecidas»<br><span style="font-family: &quot;General Sans&quot;, system-ui, sans-serif; font-style: normal; font-size: 12px; color: var(--muted, #9FB0C8)">El aula como taller, tesis,&nbsp; p. 40</span></p>
+        <a href="aula-como-taller.html" style="align-self:center;display:inline-flex;align-items:center;gap:16px;padding:6px 6px 6px 26px;border-radius:999px;background:linear-gradient(135deg,#5B2DD0,#7C4DFF);color:#FFFFFF;font-weight:600;font-size:15px;letter-spacing:.01em;box-shadow:0 0 0 1px rgba(201,181,255,.35), 0 12px 32px rgba(124,77,255,.4);transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s" style-hover="transform:translateY(-2px);color:#FFFFFF;box-shadow:0 0 0 6px rgba(167,123,255,.22), 0 16px 44px rgba(124,77,255,.55)">
+          Ver cómo enseño
+          <span aria-hidden="true" style="width:40px;height:40px;border-radius:999px;background:#F5F7FA;color:#5B2DD0;display:grid;place-items:center;font-size:17px"><span style="display:block;animation:nudge 1.8s ease-in-out infinite">→</span></span>
+        </a>
+      </article>
+      <article data-reveal="" style="flex:1 1 340px;display:flex;flex-direction:column;gap:20px;padding:clamp(28px,3vw,40px);border-radius:32px;background:var(--surface, #0D1B33);border:1px solid var(--line, rgba(143,184,255,.14))">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)">Literatura y poesía</span>
+        <p style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:500;font-size:clamp(22px,2vw,28px);line-height:1.2;letter-spacing:-0.01em;text-wrap:pretty">Neruda, Benedetti, Galeano, Mendoza y Dan Brown, para mediar la comprensión de los fenómenos sociales.</p>
+        <p style="margin:0;color:var(--muted, #9FB0C8);font-size:15px;text-wrap:pretty"><em>El libro de los abrazos</em> y <em>Memorias del fuego</em> condensan procesos históricos en viñetas narrativas.</p>
+      </article>
+      <article data-reveal="" style="flex:1.6 1 460px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:clamp(28px,3vw,40px);border-radius:32px;border:1px solid var(--line, rgba(143,184,255,.14))">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)">Estrategias de aula</span>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ approaches }}" as="a" hint-placeholder-count="6">
+            <span style="padding:10px 18px;border-radius:999px;background:var(--chipBg, rgba(47,107,255,.10));font-size:15px;color:var(--ink, #F5F7FA)">{{ a }}</span>
+          </sc-for>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="experiencia" style="scroll-margin-top:110px;display:flex;flex-direction:column;gap:40px">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)"><b style="color:#2F6BFF;font-weight:600">03</b> / Experiencia</span>
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(44px,6vw,96px);line-height:.9;letter-spacing:-0.04em">Aula e investigación.</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;border-top:1px solid var(--line, rgba(143,184,255,.14))">
+      <sc-for list="{{ experience }}" as="e" hint-placeholder-count="4">
+        <article data-reveal="" style="display:flex;flex-wrap:wrap;gap:12px 40px;padding:36px 20px;margin:0 -20px;border-radius:24px;border-bottom:1px solid var(--line, rgba(143,184,255,.14));transition:background .4s" style-hover="background:var(--chipBg, rgba(47,107,255,.10))">
+          <div style="flex:0 0 200px;display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:44px;line-height:1;letter-spacing:-0.03em;color:#2F6BFF">{{ e.year }}</span>
+            <span style="font-size:13px;color:var(--muted, #9FB0C8)">{{ e.period }}</span>
+          </div>
+          <div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:6px">
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:clamp(24px,2.2vw,32px);line-height:1.1;letter-spacing:-0.015em">{{ e.role }}</h3>
+            <span style="color:var(--accentSoft, #8FB8FF);font-size:15px">{{ e.org }}</span>
+          </div>
+          <div style="flex:1.3 1 340px;min-width:0;display:flex;flex-direction:column;gap:14px">
+            <p style="margin:0;color:var(--muted, #9FB0C8);text-wrap:pretty">{{ e.text }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <sc-for list="{{ e.tags }}" as="t" hint-placeholder-count="0">
+                <span style="font-size:12px;padding:4px 12px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));color:var(--ink, #F5F7FA)">{{ t }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="proyectos" style="scroll-margin-top:110px;display:flex;flex-direction:column;gap:40px">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <span style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)"><b style="color:#2F6BFF;font-weight:600">04</b> / Proyectos</span>
+        <h2 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(44px,6vw,96px);line-height:.9;letter-spacing:-0.04em">Hecho en el aula.</h2>
+      </div>
+      <p style="margin:0;max-width:360px;color:var(--muted, #9FB0C8);text-wrap:pretty">También: Semana de la Ciencia, adaptación curricular y materiales propios de aprendizaje.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="3">
+        <article data-reveal="" style="display:flex;flex-direction:column;gap:20px;padding:10px 10px 28px;border-radius:32px;background:var(--surface, #0D1B33);border:1px solid var(--line, rgba(143,184,255,.14));transition:transform .5s cubic-bezier(.2,.7,.2,1), border-color .4s" style-hover="transform:translateY(-4px);border-color:#2F6BFF">
+          <div style="position:relative;width:100%;aspect-ratio:4/3;border-radius:24px;overflow:hidden;background:radial-gradient(80% 80% at 70% 20%, rgba(47,107,255,.35), transparent 70%), var(--bg, #060B14)">
+            <image-slot id="{{ p.slot }}" shape="rounded" radius="24" placeholder="Arrastra una foto del proyecto"></image-slot>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;padding:0 18px">
+            <span style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)">{{ p.label }}</span>
+            <h3 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:26px;line-height:1.1;letter-spacing:-0.015em;text-wrap:balance">{{ p.title }}</h3>
+            <p style="margin:0;color:var(--muted, #9FB0C8);font-size:15px;text-wrap:pretty">{{ p.text }}</p>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <div data-reveal="" style="margin:0 calc(-1 * clamp(16px,4vw,48px));display:flex;flex-direction:column;gap:12px">{{ marquee }}</div>
+
+  <section id="educacion" style="scroll-margin-top:110px;display:flex;flex-wrap:wrap;gap:16px">
+    <div data-reveal="" style="flex:1 1 100%;display:flex;flex-direction:column;gap:16px;margin-bottom:24px">
+      <span style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)"><b style="color:#2F6BFF;font-weight:600">05</b> / Educación</span>
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(44px,6vw,96px);line-height:.9;letter-spacing:-0.04em">Formación.</h2>
+    </div>
+    <sc-for list="{{ education }}" as="d" hint-placeholder-count="2">
+      <article data-reveal="" style="flex:1 1 380px;min-height:340px;display:flex;flex-direction:column;justify-content:space-between;gap:28px;padding:clamp(28px,3vw,40px);border-radius:32px;background:var(--surface, #0D1B33);border:1px solid var(--line, rgba(143,184,255,.14))">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+          <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(56px,6vw,88px);line-height:.85;letter-spacing:-0.05em;color:#2F6BFF">{{ d.year }}</span>
+          <span style="padding:6px 14px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));font-size:13px;color:var(--ink, #F5F7FA);white-space:nowrap">{{ d.badge }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <h3 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:clamp(26px,2.4vw,34px);line-height:1.05;letter-spacing:-0.02em">{{ d.degree }}</h3>
+          <span style="color:var(--accentSoft, #8FB8FF)">{{ d.school }}</span>
+          <p style="margin:12px 0 0;color:var(--muted, #9FB0C8);font-size:15px;text-wrap:pretty">{{ d.note }}</p>
+        </div>
+      </article>
+    </sc-for>
+  </section>
+
+  <section id="publicaciones" style="scroll-margin-top:110px;display:flex;flex-direction:column;gap:40px">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <span style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)"><b style="color:#2F6BFF;font-weight:600">06</b> / Publicaciones</span>
+        <h2 style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(44px,6vw,96px);line-height:.9;letter-spacing:-0.04em">Investigación.</h2>
+      </div>
+      <a href="https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001862300" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));color:var(--ink, #F5F7FA);font-size:14px;font-weight:500;transition:border-color .3s" style-hover="border-color:#2F6BFF;color:var(--ink, #F5F7FA)">Ver CvLAC · Minciencias <span style="color:#2F6BFF">↗</span></a>
+    </div>
+    <div style="display:flex;flex-direction:column;border-top:1px solid var(--line, rgba(143,184,255,.14))">
+      <sc-for list="{{ publications }}" as="pub" hint-placeholder-count="2">
+        <article data-reveal="" style="display:flex;flex-wrap:wrap;gap:12px 40px;padding:36px 0;border-bottom:1px solid var(--line, rgba(143,184,255,.14))">
+          <div style="flex:0 0 200px;display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#2F6BFF;font-weight:600">{{ pub.year }}</span>
+            <span style="font-size:13px;color:var(--muted, #9FB0C8)">{{ pub.kind }}</span>
+          </div>
+          <h3 style="flex:1 1 400px;margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:500;font-size:clamp(22px,2.2vw,32px);line-height:1.2;letter-spacing:-0.015em;text-wrap:pretty">{{ pub.title }}</h3>
+        </article>
+      </sc-for>
+      <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:12px 40px;padding:28px 0">
+        <span style="flex:0 0 200px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)">En curso</span>
+        <span style="flex:1 1 400px;color:var(--muted, #9FB0C8)">Artículo de investigación en redacción. Proyección: doctorado en Ciencias Sociales o Filosofía.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="habilidades" style="scroll-margin-top:110px;display:flex;flex-wrap:wrap;gap:40px 64px">
+    <div data-reveal="" style="flex:1.4 1 420px;display:flex;flex-direction:column;gap:24px">
+      <span style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)"><b style="color:#2F6BFF;font-weight:600">07</b> / Habilidades</span>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <sc-for list="{{ skills }}" as="s" hint-placeholder-count="6">
+          <span style="padding:12px 22px;border-radius:999px;border:1px solid var(--line, rgba(143,184,255,.14));font-family:'Cabinet Grotesk', sans-serif;font-weight:500;font-size:clamp(18px,1.6vw,22px);color:var(--ink, #F5F7FA);transition:border-color .3s, color .3s" style-hover="border-color:#2F6BFF;color:#2F6BFF">{{ s }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div data-reveal="" style="flex:1 1 300px;display:flex;flex-direction:column;gap:24px">
+      <span style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accentSoft, #8FB8FF)">Idiomas</span>
+      <div style="display:flex;flex-direction:column;border-top:1px solid var(--line, rgba(143,184,255,.14))">
+        <sc-for list="{{ languages }}" as="l" hint-placeholder-count="2">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:18px 0;border-bottom:1px solid var(--line, rgba(143,184,255,.14))">
+            <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:24px">{{ l.name }}</span>
+            <span style="font-size:14px;color:var(--muted, #9FB0C8);text-align:right">{{ l.level }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" style="scroll-margin-top:110px;position:relative;overflow:hidden;border-radius:40px;padding:clamp(32px,6vw,88px);display:flex;flex-direction:column;gap:48px;color:#F5F7FA;background:radial-gradient(60% 80% at 85% 10%, rgba(47,107,255,.7), transparent 65%), radial-gradient(50% 60% at 10% 100%, rgba(143,184,255,.25), transparent 70%), #0D1B33;border:1px solid rgba(143,184,255,.18)">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:20px">
+      <span style="font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8FB8FF"><b style="color:#F5F7FA;font-weight:600">08</b> / Contacto</span>
+      <h2 class="m-contact-h" style="margin:0;font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(52px,8vw,132px);line-height:.86;letter-spacing:-0.045em">Conversemos<br><span style="color: rgb(143, 184, 255); font-weight: 500">Sobre el aula.</span></h2>
+      <p style="margin:0;max-width:520px;color:#C9D8F2;text-wrap:pretty">Para colegios, programas de doctorado, becas y comités académicos.</p>
+    </div>
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="mailto:andersson2392@gmail.com" style="display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;background:#F5F7FA;color:#060B14;font-weight:600;font-size:16px;transition:transform .3s" style-hover="transform:translateY(-2px);color:#060B14">andersson2392@gmail.com <span>↗</span></a>
+      <a href="tel:+573117420531" style="display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;border:1px solid rgba(245,247,250,.3);color:#F5F7FA;font-weight:500;font-size:16px;transition:background .3s" style-hover="background:rgba(245,247,250,.08);color:#F5F7FA">311 742 0531 <span>↗</span></a>
+      <span style="display:inline-flex;align-items:center;padding:16px 28px;border-radius:999px;border:1px solid rgba(245,247,250,.16);color:#C9D8F2;font-size:16px">Bogotá, Colombia</span>
+    </div>
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:16px;padding-top:32px;border-top:1px solid rgba(245,247,250,.14)">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <span style="font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#8FB8FF">Referencias</span>
+        <span style="font-size:14px;color:#C9D8F2">Datos de contacto disponibles bajo solicitud</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px">
+        <sc-for list="{{ references }}" as="r" hint-placeholder-count="4">
+          <div style="padding:20px;border-radius:20px;background:rgba(6,11,20,.35);border:1px solid rgba(245,247,250,.1);display:flex;flex-direction:column;gap:2px">
+            <span style="font-family:'Cabinet Grotesk', sans-serif;font-weight:700;font-size:19px">{{ r.name }}</span>
+            <span style="font-size:14px;color:#C9D8F2">{{ r.role }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <footer style="display:flex;flex-direction:column;gap:24px;padding-top:40px">
+    <div style="font-family:'Cabinet Grotesk', sans-serif;font-weight:800;font-size:clamp(64px,15vw,240px);line-height:1.05;letter-spacing:-0.06em;color:var(--ink, #F5F7FA);opacity:.1;white-space:nowrap;overflow:hidden">Albarracin.</div>
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:20px;border-top:1px solid var(--line, rgba(143,184,255,.14));font-size:13px;color:var(--muted, #9FB0C8)">
+      <span>© 2026 Andersson Albarracin Cortes · Bogotá</span>
+      <a href="#inicio" style="color:var(--muted, #9FB0C8)" style-hover="color:#2F6BFF">Volver arriba ↑</a>
+    </div>
+  </footer>
+</main>
+</div>
+<helmet><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400&amp;display=swap"></helmet></x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;light&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;'dark'|'light'&quot;},&quot;showAvailability&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  rcRef = React.createRef();
+  state = { theme: (() => { try { return localStorage.getItem('aac-theme'); } catch (e) { return null; } })() || this.props.defaultTheme || 'dark', wide: true, phase: 0, prog: 0, cls: 0 };
+
+  themes = {
+    dark: { bg:'#060B14', surface:'#0D1B33', ink:'#F5F7FA', muted:'#9FB0C8', line:'rgba(143,184,255,.14)', accentSoft:'#8FB8FF', green:'#3FBF8F', greenSoft:'#8FE3C0', btnBg:'#F5F7FA', btnInk:'#060B14', navBg:'rgba(13,27,51,.55)', chipBg:'rgba(47,107,255,.10)', glass:'rgba(13,27,51,.35)' },
+    light: { bg:'#F5F8FF', surface:'#FFFFFF', ink:'#060B14', muted:'#45577A', line:'rgba(13,27,51,.12)', accentSoft:'#1F4FCC', green:'#1B8F63', greenSoft:'#146B4A', btnBg:'#060B14', btnInk:'#F5F7FA', navBg:'rgba(255,255,255,.7)', chipBg:'rgba(47,107,255,.08)', glass:'rgba(255,255,255,.5)' }
+  };
+
+  applyTheme() {
+    const el = this.rootRef.current; if (!el) return;
+    const t = this.themes[this.state.theme];
+    Object.entries(t).forEach(([k, v]) => el.style.setProperty('--' + k, v));
+    document.body.style.background = t.bg;
+  }
+
+  componentDidMount() {
+    this.applyTheme();
+    const measure = () => { const w = window.innerWidth >= 900; if (w !== this.state.wide) this.setState({ wide: w }); };
+    measure(); window.addEventListener('resize', measure); this._measure = measure;
+    let reduced = false;
+    try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    if (!reduced) this.pTimer = setInterval(() => this.setState(s => {
+      const prog = s.prog + 200 / 6500;
+      if (prog < 1) return { prog };
+      const phase = (s.phase + 1) % 3;
+      return { prog: 0, phase, cls: phase === 0 ? (s.cls + 1) % 3 : s.cls };
+    }), 200);
+    this.io = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = 1; e.target.style.transform = 'none'; this.io.unobserve(e.target); }
+    }), { threshold: 0.08 });
+    this.rootRef.current.querySelectorAll('[data-reveal]').forEach((n, i) => {
+      n.style.opacity = 0; n.style.transform = 'translateY(24px)';
+      n.style.transition = (n.style.transition ? n.style.transition + ', ' : '') + 'opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1)';
+      this.io.observe(n);
+    });
+    this.startRC();
+  }
+  componentDidUpdate() { this.applyTheme(); }
+
+  // Animación de Res Cogitans: el logotipo se escribe a mano sobre un banco de taller,
+  // teñido con los azules del sitio. Arranca cuando la tarjeta entra en pantalla y se repite.
+  startRC() {
+    let tries = 0;
+    // Si el script de la animación no cargó con la página, se vuelve a pedir.
+    const ensureScript = () => {
+      if (window.RCLoader || this._rcScript) return;
+      const s = document.createElement('script');
+      s.src = new URL('./rc-loader.js', document.baseURI).href;
+      document.head.appendChild(s); this._rcScript = s;
+    };
+    const visible = (el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < (window.innerHeight || 800) && r.width > 0; };
+    const launch = () => {
+      const host = this.rcRef.current; if (!host) return;
+      if (this._rc) return;
+      if (!window.RCLoader) { ensureScript(); if (++tries < 60) this._rcRetry = setTimeout(launch, 300); return; }
+      this._rcHost = host;
+      // Solo la marca (sin frase ni crédito). Se escribe tres veces y queda quieta con un brillo.
+      let runs = 0;
+      const l = window.RCLoader.show({ target: host, theme: 'dark', speed: 1.2, loop: true, hold: 2200, width: '420px', phrase: '', credit: '', caption: '',
+        onDrawn: () => { if (++runs >= 2) { l.opts.loop = false; host.classList.add('rc-rest'); } } });
+      host.parentNode && host.parentNode.classList.add('rc-drawn');
+      const tone = {
+        '--rcl-paper': '#0D1B33', '--rcl-ink': '#F5F7FA', '--rcl-soft': 'rgba(143,184,255,.25)', '--rcl-coffee': '#C9D8F2',
+        '--rcl-cred-a': '#33507F', '--rcl-cred-b': '#F5F7FA',
+        '--rcl-wood': '#0F2347', '--rcl-grain': '#8FB8FF', '--rcl-grain-k': '.5', '--rcl-hi': '#1A3A6E', '--rcl-seam': '#07101F',
+        '--rcl-glow': 'rgba(47,107,255,.5)', '--rcl-glow-mid': 'rgba(47,107,255,.16)', '--rcl-vig': 'rgba(3,7,14,.7)',
+        '--rcl-tool': 'rgba(143,184,255,.62)', '--rcl-tool-fill': 'rgba(13,27,51,.85)', '--rcl-metal': 'rgba(143,184,255,.42)', '--rcl-shadow': 'rgba(0,0,0,.4)'
+      };
+      Object.keys(tone).forEach(k => l.el.style.setProperty(k, tone[k]));
+      this._rc = l;
+    };
+    const host0 = this.rcRef.current;
+    if (host0 && 'IntersectionObserver' in window) {
+      this._rcIO = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { this._rcSeen = true; launch(); this._rcIO.disconnect(); } }, { threshold: 0.2 });
+      this._rcIO.observe(host0);
+    }
+    // Vigilante: si la ventana se volvió a dibujar (por ejemplo, al editar) y la animación quedó fuera, la vuelve a montar.
+    this._rcWatch = setInterval(() => {
+      const host = this.rcRef.current; if (!host) return;
+      if (this._rc && (this._rcHost !== host || !host.contains(this._rc.el))) { try { this._rc.destroy(); } catch (e) {} this._rc = null; }
+      if (!this._rc && (this._rcSeen || visible(host))) { this._rcSeen = true; launch(); }
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this._rcWatch); clearTimeout(this._rcRetry); this._rcIO && this._rcIO.disconnect(); this._rc && this._rc.destroy(); clearInterval(this.pTimer); window.removeEventListener('resize', this._measure); this.io && this.io.disconnect(); }
+
+  buildMarquee(items, dur, reverse) {
+    const h = React.createElement;
+    const chip = (t, i) => h('span', { key: i, style: { flexShrink: 0, padding: '14px 28px', borderRadius: 999, border: '1px solid var(--line, rgba(143,184,255,.14))', fontFamily: "'Cabinet Grotesk', sans-serif", fontWeight: 500, fontSize: 'clamp(20px,2vw,28px)', letterSpacing: '-0.01em', color: 'var(--ink, #F5F7FA)', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 14 } }, h('span', { style: { width: 6, height: 6, borderRadius: 999, background: '#2F6BFF' } }), t);
+    return h('div', { style: { overflow: 'hidden', WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)', maskImage: 'linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)' } },
+      h('div', { style: { display: 'flex', gap: 12, width: 'max-content', animation: `marq ${dur}s linear infinite${reverse ? ' reverse' : ''}` } }, [...items, ...items].map(chip)));
+  }
+
+  renderVals() {
+    const dark = this.state.theme === 'dark';
+    const { phase, prog, cls } = this.state;
+    const pLitAll = [[8, 22, 28], [10, 20, 28], [22, 26, 28]];
+    const pTitles = ['Globalización e identidad', 'La máxima «Yo tengo un sueño»', 'Res Cogitans'];
+    const pWords = [['Una gran pregunta', 'Creamos juntos', '¿Qué me llevo?'], ['Una frase que inspira', 'Pintamos la pared', 'La palabra vive'], ['¿Qué sabemos ya?', 'Aprendemos jugando', '¿Qué aprendí?']];
+    const pCapsAll = [
+      ['Abrimos con una gran pregunta: ¿cómo cuidar la identidad de los pueblos frente al neoliberalismo?', 'Entre todos explicamos cinco conceptos y los convertimos en una infografía.', 'Cerramos preguntándonos qué nos llevamos. La infografía se recuerda porque la decidimos entre todos.'],
+      ['Empezamos con una frase que inspira: «Yo tengo un sueño», de Martin Luther King.', 'Convertimos esas ideas en grafitis y eslóganes sobre una pared.', 'Cerramos descubriendo que las palabras siguen teniendo poder hoy.'],
+      ['Empezamos con un quiz en Desafíate para saber qué sabe ya el grupo.', 'Aprendemos con actividades y retos que se activan durante la clase.', 'Repetimos el quiz al final para ver qué aprendimos.']
+    ];
+    const pPal = [
+      { c: '#5C8CFF', s: '#A9C4FF', core: '#1E3F99', g: 'rgba(92,140,255,.22)', glow: 'rgba(92,140,255,.75)', bg: 'rgba(92,140,255,.14)' },
+      { c: '#A77BFF', s: '#D4BFFF', core: '#5B2DA8', g: 'rgba(167,123,255,.22)', glow: 'rgba(167,123,255,.75)', bg: 'rgba(167,123,255,.14)' },
+      { c: '#3FBF8F', s: '#8FE3C0', core: '#1E7F5C', g: 'rgba(63,191,143,.2)', glow: 'rgba(63,191,143,.75)', bg: 'rgba(63,191,143,.14)' }
+    ][cls];
+    const pLit = pLitAll[cls];
+    const pMul = [11, 9, 13][cls];
+    const pClasses = [0, 1, 2].map(i => ({ name: 'Clase ' + (i + 1), pressed: cls === i, go: () => this.setState({ cls: i, phase: 0, prog: 0 }),
+      bg: cls === i ? pPal.bg : 'transparent', border: cls === i ? pPal.c : 'var(--line, rgba(143,184,255,.14))', ink: cls === i ? 'var(--ink, #F5F7FA)' : 'var(--muted, #9FB0C8)' }));
+    const pDots = Array.from({ length: 28 }, (_, i) => {
+      const rank = (i * pMul) % 28; const on = rank < pLit[phase];
+      return { bg: on ? (phase === 2 ? pPal.s : pPal.c) : 'rgba(143,184,255,.2)', glow: on ? '0 0 10px ' + pPal.glow : '0 0 0 rgba(0,0,0,0)', delay: (rank * 35) + 'ms', anim: on ? 'dotpulse ' + (2 + (i % 5) * 0.35) + 's ease-in-out infinite' : 'none' };
+    });
+    const pMoments = ['Apertura', 'Construcción', 'Recuerdo'].map((name, i) => ({
+      name, pressed: phase === i, go: () => this.setState({ phase: i, prog: 0 }),
+      fill: phase === i ? Math.round(prog * 100) : (i < phase ? 100 : 0),
+      bg: phase === i ? pPal.bg : 'transparent',
+      border: phase === i ? pPal.c : 'var(--line, rgba(143,184,255,.14))',
+      ink: phase === i ? 'var(--ink, #F5F7FA)' : 'var(--muted, #9FB0C8)'
+    }));
+    if (!this._marquee) this._marquee = React.createElement(React.Fragment, null,
+      this.buildMarquee(['Historia', 'Geografía', 'Filosofía', 'Ciencias Políticas', 'Economía', 'Ética', 'Cátedra de Paz', 'Competencias Ciudadanas', 'Cátedra Socioemocional'], 50, false),
+      this.buildMarquee(['Realidad aumentada', 'Modelado 3D', 'Cartografía social', 'Atlas.ti', 'Debates', 'Aprendizaje basado en preguntas', 'Poesía y literatura', 'Pausas activas'], 60, true));
+    return {
+      rootRef: this.rootRef,
+      rcRef: this.rcRef,
+      wide: this.state.wide,
+      openNav: () => this.setState({ navOpen: true }),
+      closeNav: () => this.setState({ navOpen: false }),
+      navMax: this.state.navOpen && this.state.wide ? '1100px' : '340px',
+      linksMax: this.state.navOpen ? '600px' : '0px',
+      linksOpacity: this.state.navOpen ? 1 : 0,
+      toggleMax: this.state.navOpen ? '44px' : '0px',
+      navShadow: this.state.navOpen ? '0 20px 60px rgba(6,11,20,.45)' : '0 8px 24px rgba(6,11,20,.25)',
+      toggleTheme: () => this.setState(s => { const theme = s.theme === 'dark' ? 'light' : 'dark'; try { localStorage.setItem('aac-theme', theme); } catch (e) {} return { theme }; }),
+      showAvailability: this.props.showAvailability ?? true,
+      marquee: this._marquee,
+      pDash: (527.8 * (1 - [0.3, 0.72, 1][phase])).toFixed(1),
+      pCore: [0.35, 0.6, 0.9][phase],
+      pWord: pWords[cls][phase],
+      pWordSize: (() => { const w = pWords[cls][phase]; return w.length <= 9 ? '15px' : w.length <= 15 ? '14px' : '13px'; })(),
+      pC: pPal.c, pCs: pPal.s, pCo: pPal.core, pCg: pPal.g,
+      pDots, pMoments, pClasses, pCaption: pCapsAll[cls][phase], pCapTitle: 'Clase ' + (cls + 1) + ' · ' + pTitles[cls] + ' · ' + ['Apertura', 'Construcción', 'Recuerdo'][phase],
+      facts: [
+        { value: '4', unit: 'años y 8 meses', label: 'Docente de Ciencias Sociales' },
+        { value: '1', unit: 'año', label: 'Docente de Filosofía' },
+        { value: '4°–11°', unit: 'grados', label: 'Grados en los que ha enseñado' },
+        { value: '4.7-4.8', unit: 'de 5.0', label: 'Promedio de maestría y Pregrado. \nMeritorio a Summa Cum Laude' }
+      ],
+      approaches: ['Debates', 'Proyectos de aula', 'Aprendizaje basado en preguntas', 'Arte ante problemáticas complejas', 'Trabajo en grupos con acuerdos', 'Investigaciones de los estudiantes'],
+      experience: [
+        { year: '2023', period: 'Abril 2023 — hoy', role: 'Docente de planta', org: 'Liceo Moderno Walt Whitman · Colegio privado',
+          text: 'Dirección de grupo, ejecución de clase y proyectos transversales como ferias e innovaciones educativas. De 4° a 6°: Historia, Geografía, Religión y Ética, Cátedra de Paz y Socioemocional. En grados superiores: Filosofía, Ciencias Políticas, Economía, Competencias Ciudadanas, Ética y Ciencias Sociales.',
+          tags: ['Ciencias Sociales', 'Filosofía', 'Dirección de grupo'] },
+        { year: '2024', period: 'Asesoría independiente', role: 'Asistente de investigación', org: 'Con expertos educativos',
+          text: 'Acompañamiento en la finalización de proyectos investigativos. Uso de Atlas.ti, creación de base de datos de artículos científicos y actividades transversales a la investigación.',
+          tags: ['Atlas.ti', 'Bases de datos'] },
+        { year: '2022', period: 'Práctica profesional certificada', role: 'Docente de Ciencias Sociales', org: 'Colegio Restrepo Millán I.E.D. · Colegio público',
+          text: 'Ejercicio docente en grados 6°, 7° y 9°: planear, aplicar y estructurar proyectos transversales y clases disciplinares.',
+          tags: ['Grados 6°, 7° y 9°'] },
+        { year: '2022', period: 'Dos semestres · con contrato', role: 'Investigador Junior', org: 'Universidad Antonio Nariño',
+          text: 'Análisis de datos masivos, creación de artículos para publicación, realización de entrevistas y uso de herramientas digitales de datos masivos.',
+          tags: ['Datos masivos', 'Entrevistas'] }
+      ],
+      projects: [
+        { slot: 'proyecto-emprender', label: 'Emprender 2024', title: 'Bogotá y sus fuentes hídricas',
+          text: 'Proyecto interdisciplinario con modelado 3D, realidad aumentada y cartografía social, expuesto por estudiantes de 4° a 9°. Primera inclusión de móviles y RA.' },
+        { slot: 'proyecto-encanto', label: 'Muestra Artística 2026', title: 'La magia de Encanto',
+          text: 'Lideró al grado once en práctica, corrección, motivación e inclusión de ideas. También participó en el baile docente.' },
+        { slot: 'proyecto-literatura', label: 'Innovación', title: 'Poesía y literatura en sociales',
+          text: 'Respuestas a la falta de atención y la pereza escolar, con soluciones digitales educativas para amenizar los aprendizajes.' }
+      ],
+      education: [
+        { year: '2026', badge: 'Promedio 4.9 / 5.0', degree: 'Magíster en Filosofía y Justicia Social', school: 'Universidad de La Salle',
+          note: 'Tesis: “El aula como taller y respuesta artesanal: hacia una ética docente desde la alteridad”.' },
+        { year: '2023', badge: 'Cum Laude', degree: 'Licenciado en Ciencias Sociales', school: 'Universidad Antonio Nariño',
+          note: 'Graduado Cum Laude.' }
+      ],
+      publications: [
+        { year: '2021', kind: 'Ponencia internacional', title: 'Territorios Interculturales: Experiencia de la proyección social y comunitaria en estudiantes indígenas de la Facultad de Educación de la Universidad Antonio Nariño' },
+        { year: '2021', kind: 'Ponencia nacional', title: 'Desafíos de la educación postpandemia. Aprendizajes obtenidos con la educación remota y asistida por tecnologías' }
+      ],
+      skills: ['Investigador', 'Innovador', 'Ejecutor de proyectos', 'Gestión del tiempo', 'Trabajo en equipo', 'Pensamiento estratégico'],
+      languages: [ { name: 'Español', level: 'Nativo' }, { name: 'Inglés', level: 'B1 · en proceso' } ],
+      references: [
+        { name: 'Rodulfo Castiblanco', role: 'Docente Universitario' },
+        { name: 'Luz Miryam', role: 'Coordinadora · Colegio Walt Whitman' },
+        { name: 'Yuri Ríos', role: 'Coordinadora · Colegio Walt Whitman' },
+        { name: 'Andrea Marcela Maecha', role: 'Docente Universitaria' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

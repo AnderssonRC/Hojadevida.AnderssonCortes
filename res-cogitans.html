@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Res Cogitans</title>
+<script src="./support.js?v=20261120"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&amp;f[]=general-sans@400,500,600&amp;display=swap">
+<script src="./rc-loader.js?v=20261120"></script>
+<style>
+body{margin:0;background:#060B14;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:#2F6BFF;color:#F5F7FA}
+
+/* Búho: duerme con los ojos cerrados y respira; aparece una luz y lo despierta */
+.owl-imgs{position:absolute;inset:0;filter:brightness(.5) saturate(.75);transition:filter .7s ease-out, transform 1.6s cubic-bezier(.45,0,.2,1);animation:breathe 4.6s ease-in-out infinite}
+.s2 .owl-imgs{filter:none;animation:none}
+/* Entrada y salida de la intro: cámara que se acerca suave y se oscurece, y luego vuelve */
+.m-in .owl-imgs{transform:scale(1.12);filter:brightness(.4);transition:filter 1.1s ease-in-out, transform 1.6s cubic-bezier(.45,0,.2,1)}
+.owl-imgs img{position:absolute;inset:0;width:100%;height:100%}
+/* Los párpados se abren: la mirada aparece desde la línea del párpado hacia arriba y abajo */
+.owl-eye{clip-path:ellipse(9.8% 0% at var(--ex) var(--ey))}
+.s2 .owl-eye{animation:lidOpen .7s cubic-bezier(.25,.8,.25,1) forwards}
+@keyframes lidOpen{from{clip-path:ellipse(9.8% 0% at var(--ex) var(--ey))}to{clip-path:ellipse(9.8% 13.6% at var(--ex) var(--ey))}}
+.owl-open{opacity:0}
+.s3 .owl-open{opacity:1}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.014)}}
+.owl-light{position:absolute;width:10%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,#fff 0%,rgba(190,225,255,.95) 20%,rgba(90,170,255,.5) 50%,rgba(90,170,255,0) 100%);mix-blend-mode:screen;opacity:0;transform:translate(-50%,-50%) scale(0);pointer-events:none}
+.s1 .owl-light{animation:lightIn .25s cubic-bezier(.3,.9,.3,1) forwards}
+.s2 .owl-light{animation:lightFlash .6s ease-out forwards}
+@keyframes lightIn{0%{opacity:0;transform:translate(-50%,-50%) scale(0)}100%{opacity:1;transform:translate(-50%,-50%) scale(.7)}}
+@keyframes lightFlash{0%{opacity:1;transform:translate(-50%,-50%) scale(.7)}22%{opacity:1;transform:translate(-50%,-50%) scale(1.35)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+.owl-shade{opacity:0;transition:opacity .9s ease}
+.s3 .owl-shade{opacity:1}
+
+/* Marca: solo el logotipo, escrito trazo a trazo sobre el búho */
+.owlbrand .rcl{padding:0;background:transparent}
+.owlbrand .rcl__stage{width:100%}
+.owlbrand .rcl__foot,.owlbrand .rcl__phrase,.owlbrand .rcl__credit{display:none}
+.owlbrand .rcl__logo{filter:drop-shadow(0 0 16px rgba(80,160,255,.6)) drop-shadow(0 2px 6px rgba(2,4,12,.8))}
+.owlbrand .fallback{position:absolute;inset:0;display:grid;place-items:center;font-family:'Cabinet Grotesk',system-ui,sans-serif;font-weight:800;font-size:clamp(34px,7vw,84px);letter-spacing:-0.04em;color:#F5F7FA;text-shadow:0 0 24px rgba(80,160,255,.7)}
+
+/* Intro tipo estudio de cine: palabras metálicas que giran en 3D sobre cortes rápidos del búho */
+.marvel{position:absolute;inset:0;z-index:3;display:grid;place-items:center;pointer-events:none;perspective:900px;overflow:hidden}
+.mpanel{position:absolute;inset:-4%;background:#02040c url(./buho.jpg?v=20261120) center/cover no-repeat;opacity:0;filter:brightness(.38) saturate(1.05);transition:opacity 1s ease-in-out}
+.marvel.on .mpanel{opacity:1}
+.mflash{position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,rgba(220,235,255,.9),rgba(90,170,255,.35) 55%,rgba(2,4,12,0));opacity:0;mix-blend-mode:screen}
+.mflash.go{animation:mflash .26s ease-out}
+@keyframes mflash{0%{opacity:.85}100%{opacity:0}}
+.mwords{position:relative;display:grid;place-items:center;width:100%;filter:drop-shadow(0 0 18px rgba(80,160,255,.55)) drop-shadow(0 4px 10px rgba(2,4,12,.8))}
+.mw{grid-area:1/1;opacity:0;font-family:'Cabinet Grotesk',system-ui,sans-serif;font-weight:800;font-size:clamp(44px,10vw,150px);line-height:1;letter-spacing:.01em;text-transform:uppercase;white-space:nowrap;background:linear-gradient(100deg,#9FC2FF 0%,#FFFFFF 38%,#5C8CFF 50%,#FFFFFF 62%,#9FC2FF 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;transform-origin:50% 50%}
+.mw.small{font-size:clamp(24px,4.4vw,64px);font-style:italic;font-weight:500;letter-spacing:.04em}
+.mw.go{animation:mflip .6s cubic-bezier(.2,.75,.2,1) forwards, mshine .6s linear forwards}
+@keyframes mflip{0%{opacity:0;transform:rotateX(-78deg) scale(1.4);filter:blur(10px)}22%{opacity:1;transform:rotateX(0) scale(1.06);filter:blur(0)}80%{opacity:1;transform:rotateX(0) scale(1)}100%{opacity:0;transform:rotateX(72deg) scale(.9);filter:blur(6px)}}
+@keyframes mshine{from{background-position:100% 0}to{background-position:0 0}}
+.owlbrand.out .rcl{opacity:0 !important;transform:scale(.97);filter:blur(6px);transition:opacity .9s ease-in-out, transform .9s ease-in-out, filter .9s ease-in-out}
+.owlbrand.back .rcl{animation:brandBack 1.5s cubic-bezier(.3,.6,.2,1) both}
+@keyframes brandBack{0%{opacity:0;transform:scale(1.05);filter:blur(8px)}55%{opacity:1}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+
+/* Fuegos */
+.fire-img{position:relative;display:block;width:100%;height:100%}
+.fire-glow{position:absolute;inset:-26%;border-radius:50%;background:radial-gradient(closest-side,var(--glow),transparent);filter:blur(6px);opacity:0}
+.fire-glow.lit{animation:flame 2.6s ease-in-out infinite}
+@keyframes flame{0%,100%{opacity:.35;transform:scale(.92)}50%{opacity:.8;transform:scale(1.08)}}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="min-height:100vh;background:#060B14;color:#F5F7FA;font-family:'General Sans', system-ui, sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden">
+
+<nav style="position:fixed;top:16px;left:0;right:0;z-index:30;display:flex;justify-content:center;padding:0 16px;pointer-events:none">
+  <div style="pointer-events:auto;display:flex;align-items:center;gap:8px;padding:8px;border-radius:999px;background:rgba(13,27,51,.55);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(143,184,255,.14)">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;background:#F5F7FA;color:#060B14;font-weight:600;font-size:14px;white-space:nowrap;text-decoration:none" style-hover="opacity:.88"><span aria-hidden="true">←</span> Volver a la hoja de vida</a>
+  </div>
+</nav>
+
+<header style="position:relative;height:clamp(280px,56.25vw,72vh);overflow:hidden;background:#02040c">
+  <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0">Res Cogitans</h1>
+  <div style="position:absolute;left:50%;top:50%;width:max(100%, calc(clamp(280px,56.25vw,72vh) * 1.7768));aspect-ratio:1672/941;transform:translate(-50%,-50%)">
+    <div class="owl-imgs">
+      <img src="./buho-dormido.jpg?v=20261120" alt="Búho azul de mirada intensa, imagen de Res Cogitans">
+      <img class="owl-eye" src="./buho.jpg?v=20261120" alt="" aria-hidden="true" style="--ex:35.6%;--ey:42.5%">
+      <img class="owl-eye" src="./buho.jpg?v=20261120" alt="" aria-hidden="true" style="--ex:64.6%;--ey:42.3%">
+      <img class="owl-open" src="./buho.jpg?v=20261120" alt="" aria-hidden="true">
+    </div>
+    <div class="owl-light" style="left:35.6%;top:42.6%"></div>
+    <div class="owl-light" style="left:64.6%;top:42.4%"></div>
+  </div>
+  <div class="owl-shade" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(6,11,20,0) 38%, rgba(6,11,20,.8) 76%, #060B14 100%)"></div>
+  <p style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);margin:0">Construye, transforma, innova y, sobre todo, aplica. Bienvenido a Res Cogitans.</p>
+  <div class="marvel" ref="{{ marvelRef }}" aria-hidden="true">
+    <div class="mpanel"></div>
+    <div class="mflash"></div>
+    <div class="mwords">
+      <span class="mw" data-d="560">Construye</span>
+      <span class="mw" data-d="560">Transforma</span>
+      <span class="mw" data-d="560">Innova</span>
+      <span class="mw small" data-d="620">y, sobre todo,</span>
+      <span class="mw" data-d="950">Aplica…</span>
+      <span class="mw small" data-d="1100">Bienvenido a</span>
+    </div>
+  </div>
+  <div class="owlbrand" ref="{{ brandRef }}" role="img" aria-label="Res Cogitans" style="position:absolute;left:50%;bottom:5%;transform:translateX(-50%);width:min(540px,60%);aspect-ratio:761/317;isolation:isolate"></div>
+</header>
+
+<main style="position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(16px,4vw,48px) 96px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:clamp(28px,4vw,56px)">
+
+  <article data-fire="" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px">
+    <div data-icon="" style="position:relative;width:90px;height:90px"><span class="fire-glow" style="--glow:rgba(214,72,214,.7)"></span><img class="fire-img" src="./fuego-desafiate.png?v=20261120" alt="" width="90" height="90"></div>
+    <div data-text="" style="display:flex;flex-direction:column;gap:8px">
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(26px,2.6vw,34px);line-height:1.05;letter-spacing:-0.02em">Desafíate</h2>
+      <p style="margin:0;color:#9FB0C8;max-width:300px;text-wrap:pretty">Cuestionarios en vivo y asincrónicos. Las respuestas del grupo se ven en tiempo real.</p>
+    </div>
+  </article>
+
+  <article data-fire="" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px">
+    <div data-icon="" style="position:relative;width:90px;height:90px"><span class="fire-glow" style="--glow:rgba(70,230,40,.55)"></span><img class="fire-img" src="./fuego-presentaciones.png?v=20261120" alt="" width="90" height="90"></div>
+    <div data-text="" style="display:flex;flex-direction:column;gap:8px">
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(26px,2.6vw,34px);line-height:1.05;letter-spacing:-0.02em">Presentaciones Interactivas</h2>
+      <p style="margin:0;color:#9FB0C8;max-width:300px;text-wrap:pretty">Clases con actividades por equipos, mando del docente y vista móvil para el estudiante.</p>
+    </div>
+  </article>
+
+  <article data-fire="" style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px">
+    <div data-icon="" style="position:relative;width:90px;height:90px"><span class="fire-glow" style="--glow:rgba(226,160,98,.65)"></span><img class="fire-img" src="./fuego-agenda.png?v=20261120" alt="" width="90" height="90" style="border-radius:16%"></div>
+    <div data-text="" style="display:flex;flex-direction:column;gap:8px">
+      <h2 style="margin:0;font-family:'Cabinet Grotesk', system-ui, sans-serif;font-weight:800;font-size:clamp(26px,2.6vw,34px);line-height:1.05;letter-spacing:-0.02em">Agenda Docente</h2>
+      <p style="margin:0;color:#9FB0C8;max-width:300px;text-wrap:pretty">Planeador de clases para organizar el día a día del docente.</p>
+    </div>
+  </article>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  rootRef = React.createRef();
+  brandRef = React.createRef();
+  marvelRef = React.createRef();
+
+  componentDidMount() {
+    const root = this.rootRef.current;
+    document.body.style.background = '#060B14';
+    this._timers = [];
+    const later = (fn, ms) => this._timers.push(setTimeout(fn, ms));
+    let reduced = false;
+    try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    this._reduced = reduced;
+
+    // Los fuegos esperan ocultos hasta que la marca termine de escribirse.
+    this.fires = Array.from(root.querySelectorAll('[data-fire]'));
+    this.fires.forEach(f => {
+      f.querySelector('[data-icon]').style.opacity = 0;
+      const t = f.querySelector('[data-text]');
+      t.style.opacity = 0; t.style.transform = 'translateY(14px)';
+    });
+
+    if (reduced) { root.classList.add('s1', 's2', 's3'); this.startBrand(); return; }
+    // La secuencia empieza solo cuando las imágenes del búho ya están listas, para que no arranque a medias.
+    const imgs = Array.from(root.querySelectorAll('.owl-imgs img'));
+    const ready = Promise.all(imgs.map(i => (i.decode ? i.decode() : Promise.resolve()).catch(() => {})));
+    const timeout = new Promise(r => later(r, 4000));
+    Promise.race([ready, timeout]).then(() => {
+      later(() => root.classList.add('s1'), 350);    // duerme; se enciende una luz en sus ojos
+      later(() => root.classList.add('s2'), 650);    // destello: los párpados se abren y la luz se apaga
+      later(() => { root.classList.add('s3'); this.startBrand(); }, 1500); // da paso a la marca
+    });
+  }
+
+  componentWillUnmount() { (this._timers || []).forEach(clearTimeout); this._rc && this._rc.destroy(); }
+
+  // Escribe solo el logotipo (sin frase, sin crédito) y avisa cuando termina.
+  startBrand() {
+    const host = this.brandRef.current; if (!host) return;
+    let tries = 0;
+    const launch = () => {
+      if (this._rc) return;
+      if (!window.RCLoader) {
+        if (++tries < 20) { this._timers.push(setTimeout(launch, 250)); return; }
+        const s = document.createElement('span'); s.className = 'fallback'; s.textContent = 'Res Cogitans'; host.appendChild(s);
+        this.dropFires(); return;
+      }
+      const l = window.RCLoader.show({
+        target: host, theme: 'dark', scene: 'none', phrase: '', credit: '', caption: '', fonts: false,
+        background: 'transparent', speed: this._reduced ? 6 : 2.6, quick: this._reduced,
+        onDrawn: () => { l.el.setAttribute('aria-busy', 'false'); this._timers.push(setTimeout(() => this.playMarvel(), this._reduced ? 0 : 550)); }
+      });
+      l.el.style.setProperty('--rcl-ink', '#F5F7FA');
+      this._rc = l;
+    };
+    launch();
+  }
+
+  // Tras la firma: palabras con giro 3D y cortes rápidos; «Bienvenido a» devuelve la marca.
+  playMarvel() {
+    if (this._marvel) return; this._marvel = true;
+    const box = this.marvelRef.current, brand = this.brandRef.current;
+    if (!box || this._reduced) { this.dropFires(); return; }
+    const panel = box.querySelector('.mpanel'), flash = box.querySelector('.mflash');
+    const words = Array.from(box.querySelectorAll('.mw'));
+    const root = this.rootRef.current;
+    // El primer y el último plano son el búho completo, para que la entrada y la salida empalmen sin saltos.
+    const wide = ['cover', '50% 46%'];
+    const shots = [wide, ['180%', '72% 38%'], ['300%', '50% 62%'], ['150%', '50% 30%'], ['260%', '36% 44%'], wide];
+    const cut = (s, withFlash) => {
+      panel.style.backgroundSize = s[0];
+      panel.style.backgroundPosition = s[1];
+      if (withFlash) { flash.classList.remove('go'); void flash.offsetWidth; flash.classList.add('go'); }
+    };
+    // Entrada: la firma se desvanece mientras la cámara se acerca al búho y baja la luz.
+    cut(wide, false);
+    brand.classList.add('out');
+    root.classList.add('m-in');
+    this._timers.push(setTimeout(() => box.classList.add('on'), 450));
+    let t = 1150;
+    words.forEach((w, i) => {
+      const d = +w.dataset.d || 560;
+      this._timers.push(setTimeout(() => { if (i > 0) cut(shots[i], i < words.length - 1); w.style.animationDuration = d + 'ms, ' + d + 'ms'; w.classList.add('go'); }, t));
+      t += d - 40;
+    });
+    // Salida: el plano se funde con el búho, la cámara se aleja y la firma reaparece enfocándose.
+    this._timers.push(setTimeout(() => { box.classList.remove('on'); root.classList.remove('m-in'); }, t - 150));
+    this._timers.push(setTimeout(() => { brand.classList.remove('out'); brand.classList.add('back'); }, t + 350));
+    this._timers.push(setTimeout(() => this.dropFires(), t + 1500));
+  }
+
+  // Los tres fuegos se desprenden de la marca y caen a su lugar.
+  dropFires() {
+    if (this._dropped) return; this._dropped = true;
+    const b = this.brandRef.current.getBoundingClientRect();
+    const cx = b.left + b.width / 2, cy = b.top + b.height * 0.55;
+    this.fires.forEach((f, i) => {
+      const icon = f.querySelector('[data-icon]'), text = f.querySelector('[data-text]'), img = f.querySelector('.fire-glow');
+      const delay = i * 140;
+      if (this._reduced) { icon.style.opacity = 1; text.style.opacity = 1; text.style.transform = 'none'; return; }
+      const r = icon.getBoundingClientRect();
+      icon.style.transition = 'none';
+      icon.style.transform = 'translate(' + (cx - (r.left + r.width / 2)) + 'px,' + (cy - (r.top + r.height / 2)) + 'px) scale(.25)';
+      void icon.offsetWidth;
+      icon.style.transition = 'transform .8s cubic-bezier(.3,1.35,.45,1) ' + delay + 'ms, opacity .25s ease ' + delay + 'ms';
+      icon.style.transform = 'none'; icon.style.opacity = 1;
+      text.style.transition = 'opacity .6s ease ' + (delay + 450) + 'ms, transform .6s cubic-bezier(.2,.7,.2,1) ' + (delay + 450) + 'ms';
+      text.style.opacity = 1; text.style.transform = 'none';
+      this._timers.push(setTimeout(() => img.classList.add('lit'), delay + 850));
+    });
+  }
+
+  renderVals() {
+    return { rootRef: this.rootRef, brandRef: this.brandRef, marvelRef: this.marvelRef };
+  }
+}
+</script>
+</body>
+</html>
